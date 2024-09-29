@@ -40,9 +40,12 @@ public class GameStateManager {
     public void render(Graphics g)
     {
         ship.render(g);
-        for (LazerBolt lazerBolt : lazerBolts)
+        Iterator<LazerBolt> iterator = lazerBolts.iterator();
+        while(iterator.hasNext())
         {
-            lazerBolt.render(g);
+            LazerBolt lazer = iterator.next();
+            lazer.render(g);
         }
+
     }
 }

@@ -43,7 +43,7 @@ public class AssetManager {
 
         int width = 16, height = 16;
         String filePath = "/assets/spritesheets/laser-bolts.png";
-        BufferedImage[][] lazers = new BufferedImage[2][2];
+         AssetManager.lazers = new BufferedImage[2][2];
 
         try {
             BufferedImage image = ImageIO.read(AssetManager.class.getResource(filePath));

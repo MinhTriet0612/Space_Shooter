@@ -17,6 +17,9 @@ public class Ship extends Entity {
     private Input input;  // Reference to the Input class
     private Timer boostTimer;
     private LinkedList<LazerBolt> lazerBolts;
+    private Timer limitFireRate;
+    private int fireRate = 150;
+    private boolean canFire = true;
 
     public Ship(int x, int y, Input input, LinkedList<LazerBolt> lazerBolts) {
         super(x, y);  // Initialize position
@@ -26,6 +29,11 @@ public class Ship extends Entity {
 
         this.boostTimer = new Timer(130, e -> updateShipBoost());
         this.boostTimer.start();
+
+        this.limitFireRate = new Timer(this.fireRate, e -> {
+            this.canFire = true;
+            this.limitFireRate.stop();
+        });
     }
 
     public void update() {
@@ -96,7 +104,12 @@ public class Ship extends Entity {
     }
 
     private void fireLazerBolt() {
+        if (!this.canFire) {
+            return;
+        }
         LazerBolt lazerBolt = new LazerBolt(this.x + 5, this.y + 5);
         this.lazerBolts.addLast(lazerBolt);
+        this.canFire = false;
+        this.limitFireRate.start();
     }
 }
