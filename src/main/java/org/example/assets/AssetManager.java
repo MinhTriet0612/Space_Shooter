@@ -2,14 +2,23 @@ package org.example.assets;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 public class AssetManager {
+
+    private static BufferedImage[][] sprites;
+    private static BufferedImage[][] lazers;
+
+
     public static BufferedImage[][] getShipAssets() {
+
+        if (AssetManager.sprites != null) {
+            return AssetManager.sprites;
+        }
+
         int width = 16, height = 24;
-        BufferedImage[][] sprites = new BufferedImage[2][5];
+
+        AssetManager.sprites = new BufferedImage[2][5];
         // how to get the path shorter instead of using the absolute path
         String filePath = "/assets/spritesheets/ship.png";
 
@@ -28,6 +37,10 @@ public class AssetManager {
     }
 
     public static BufferedImage[][] getLazerBoltAssets() {
+        if (AssetManager.lazers != null) {
+            return AssetManager.lazers;
+        }
+
         int width = 16, height = 16;
         String filePath = "/assets/spritesheets/laser-bolts.png";
         BufferedImage[][] lazers = new BufferedImage[2][2];

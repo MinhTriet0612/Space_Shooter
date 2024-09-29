@@ -7,17 +7,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
-public class Ship extends Entity  {
+public class Ship extends Entity {
     private BufferedImage[][] sprites;
     private int isBoosting = 0;
     private int direction = 2;
     private int speed = 6;
     private Input input;  // Reference to the Input class
     private Timer boostTimer;
-    private ArrayList<LazerBolt> lazerBolts;
+    private LinkedList<LazerBolt> lazerBolts;
 
-    public Ship(int x, int y, Input input, ArrayList<LazerBolt> lazerBolts) {
+    public Ship(int x, int y, Input input, LinkedList<LazerBolt> lazerBolts) {
         super(x, y);  // Initialize position
         this.input = input;  // Reference to the input handler
         this.sprites = AssetManager.getShipAssets();
@@ -43,8 +44,7 @@ public class Ship extends Entity  {
             reRenderDirection();
         }
 
-        if(input.space)
-        {
+        if (input.space) {
             fireLazerBolt();
             input.space = false;
         }
@@ -54,7 +54,7 @@ public class Ship extends Entity  {
     public void render(Graphics g) {
         // Render the ship based on current position and state
         g.drawImage(this.sprites[isBoosting][direction].getScaledInstance(
-          50, 60, Image.SCALE_DEFAULT), this.x, this.y, null);
+                50, 60, Image.SCALE_DEFAULT), this.x, this.y, null);
     }
 
     private void moveUp() {
@@ -97,6 +97,6 @@ public class Ship extends Entity  {
 
     private void fireLazerBolt() {
         LazerBolt lazerBolt = new LazerBolt(this.x + 5, this.y + 5);
-        this.lazerBolts.add(lazerBolt);
+        this.lazerBolts.addLast(lazerBolt);
     }
 }
