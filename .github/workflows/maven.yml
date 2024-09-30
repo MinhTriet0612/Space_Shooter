@@ -1,5 +1,4 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-name: Deploy Java Application
+name: Deploy Java Application via CheerPJ
 
 on:
   push:
@@ -27,3 +26,14 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./target
+
+    - name: Convert JAR to CheerPJ
+      run: |
+        curl -O https://www.leaningtech.com/cheerpj/cheerpjfy.py
+        python3 cheerpjfy.py ./target/your-app.jar
+
+    - name: Deploy CheerPJ output to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./target/cheerpj
