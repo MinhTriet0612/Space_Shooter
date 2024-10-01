@@ -20,7 +20,7 @@ public class Input implements KeyListener {
         down = keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN];
         left = keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT];
         right = keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT];
-        space = keys[KeyEvent.VK_SPACE];
+        space = keys[KeyEvent.VK_SPACE] || keys[KeyEvent.ALT_DOWN_MASK];
     }
 
     @Override

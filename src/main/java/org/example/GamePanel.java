@@ -3,11 +3,11 @@ package org.example;
 import org.example.entities.Space;
 import org.example.game.GameStateManager;
 import org.example.input.Input;
+import org.example.status.BulletStatus;
 
 import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.KeyListener;
 
 public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
@@ -16,14 +16,20 @@ public class GamePanel extends JPanel implements Runnable {
     private Input input;  // Input object
     private Space space;
 
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 600;
+
+    BulletStatus x = new BulletStatus("x");
+
     public GamePanel() {
-        this.setPreferredSize(new Dimension(800, 600));
+        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        this.setDoubleBuffered(true); // Draw animation smoother than
+        this.setFocusable(true);  // Notice input from keyboard
         input = new Input();  // Initialize the input system
         gsm = new GameStateManager(input);  // Manage game states
         space = new Space();
 
         this.addKeyListener(input);  // Add KeyListener to the JPanel
-        this.setFocusable(true);  // Ensure the JPanel can receive key inputs
         this.requestFocusInWindow();  // Focus the window for key input
     }
 
@@ -41,7 +47,7 @@ public class GamePanel extends JPanel implements Runnable {
             repaint();  // Redraw the screen
             try {
                 Thread.sleep(16);  // Roughly 60 FPS
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
