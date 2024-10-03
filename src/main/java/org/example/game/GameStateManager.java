@@ -1,44 +1,37 @@
 package org.example.game;
 
-import org.example.entities.HealthSystem;
-import org.example.entities.LazerBolt;
-import org.example.entities.PlayerShip;
-import org.example.input.Input;
-import org.example.item.Weapon;
+import java.awt.Graphics;
 
-import java.awt.*;
-import java.util.Iterator;
-import java.util.LinkedList;
+import org.example.system.controller.ShipController;
 
 public class GameStateManager {
+    private ShipController system;
+    // private LinkedList<LazerBolt> lazerBolts;
 
-    private PlayerShip ship;
-    private LinkedList<LazerBolt> lazerBolts;
-
-    public GameStateManager(Input input) {
-        this.lazerBolts = new LinkedList<LazerBolt>();
-        this.ship = new PlayerShip(400, 400, new Weapon(), new HealthSystem(), input, lazerBolts);
-    }
+    // public GameStateManager(Input controlInp) {
+    //     Ship ship = new Ship(new Rectangle(50, 80), null);
+    //     ship.setPosition(new Vector2D(100, 200));
+    //     this.system = new ShipController(ship, controlInp);
+    // }
 
     public void update() {
-        ship.update();
-        Iterator<LazerBolt> iterator = lazerBolts.iterator();
-        while (iterator.hasNext()) {
-            LazerBolt lazer = iterator.next();
-            lazer.update();
+        system.update(1f);
+        // Iterator<LazerBolt> iterator = lazerBolts.iterator();
+        // while (iterator.hasNext()) {
+        //     LazerBolt lazer = iterator.next();
+        //     lazer.update();
 
-            if (lazer.isOutOfBounds())
-                iterator.remove();
-        }
+        //     if (lazer.isOutOfBounds())
+        //         iterator.remove();
+        // }
     }
 
     public void render(Graphics g) {
-        ship.render(g);
-        Iterator<LazerBolt> iterator = lazerBolts.iterator();
-        while (iterator.hasNext()) {
-            LazerBolt lazer = iterator.next();
-            lazer.render(g);
-        }
-
+        system.render(g);
+        // Iterator<LazerBolt> iterator = lazerBolts.iterator();
+        // while (iterator.hasNext()) {
+        //     LazerBolt lazer = iterator.next();
+        //     lazer.render(g);
+        // }
     }
 }

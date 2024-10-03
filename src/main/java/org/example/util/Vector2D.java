@@ -6,6 +6,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
+// @Builder
 @AllArgsConstructor
 public class Vector2D {
     private int x, y; 

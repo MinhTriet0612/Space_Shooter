@@ -6,14 +6,16 @@ import java.util.UUID;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-public class BaseEntity implements Serializable { // Saving Game State, Persisting Sessions, Realtime Across Networking
+@SuperBuilder
+// Saving Game State, Persisting Sessions, Realtime Across Networking
+public class BaseEntity implements Serializable { 
     private UUID id;
     private Boolean isDeleted;
-    private Instant createdDate;
-    private Instant updatedDate;
+    private Instant createdDate, updatedDate;
     private static final long serialVersionUID = -863164858986274318L;
 
     public BaseEntity() {
