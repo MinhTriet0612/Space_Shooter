@@ -17,16 +17,17 @@ public class App extends JFrame {
     private Scene currentScene;
 
     public App(Scene scene) {
-        this.pack();
+        // this.pack();
         this.screens.add(scene);
         this.currentScene = scene;
         this.setVisible(true);
-        this.setSize(800, 700);
+        this.setSize(800, 800);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(scene);
     }
 
     public void start() {
+        this.currentScene.run();
         this.currentScene.onShow();
     }
 

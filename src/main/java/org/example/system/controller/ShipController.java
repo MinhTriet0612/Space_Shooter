@@ -15,12 +15,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ShipController extends ControllerSystem {
+
     private Ship ship;
     private ShipControlInput input;
 
     @Override
     public void update(float d) {
-        // System.out.println(this.ship.getPosition().getX() + " " + this.ship.getPosition().getY());
         if (this.input.isUp()) {
             this.ship.moveUp();
         } else if (input.isDown()) {

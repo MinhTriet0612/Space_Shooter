@@ -9,9 +9,12 @@ import lombok.Setter;
 @Setter
 // @SuperBuilder
 public class CasualWorld extends World {
+
     @Override
     public void update(float deltaTime) {
-        this.entities.stream().forEach(entity -> entity.update(1f));
+        this.entities.stream().forEach(entity -> {
+            entity.update(1f);
+        });
         this.systems.stream().forEach(gameSystem -> gameSystem.update(1f));
     }
 
@@ -19,5 +22,5 @@ public class CasualWorld extends World {
     public void render(Graphics g) {
         this.entities.stream().forEach(entity -> entity.render(g));
         this.systems.stream().forEach(gameSystem -> gameSystem.render(g));
-    }
+    } 
 }

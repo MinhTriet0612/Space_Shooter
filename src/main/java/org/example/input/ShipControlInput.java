@@ -9,15 +9,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ShipControlInput implements KeyListener {
-
     private boolean[] keys;
     private boolean up, down, left, right, space;
 
     public ShipControlInput() {
-        keys = new boolean[256];
-        this.down = false;
+        this.keys = new boolean[365];
         this.up = false;
-        this.left = false;
+        this.down = false;
+        this.left = true;
         this.right = false;
         this.space = false;
     }

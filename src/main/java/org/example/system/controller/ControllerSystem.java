@@ -9,7 +9,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-// @SuperBuilder
 public abstract class ControllerSystem extends GameSystem {
     protected Map<String, Boolean> state;
 }

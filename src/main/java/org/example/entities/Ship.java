@@ -15,7 +15,6 @@ import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 public class Ship extends MortalEntity<ShipStats> {
-
     private final BufferedImage[][] sprites = AssetManager.getShipAssets();
     private int isBoosting;
     private int direction;
@@ -24,20 +23,12 @@ public class Ship extends MortalEntity<ShipStats> {
     private int fireRate;
     private int speed;
     private boolean canFire;
-
-    // public Ship(ShipStats stats) {
-    //     this.status = new Status<>(stats);
-    //     this.position = new Vector2D(384, 514);
-    //     this.rigid = new Rectangle(50, 80);
-    //     this.boostTimer = new Timer(130, e -> updateShipBoost());
-    //     this.sprites = AssetManager.getShipAssets();
-    //     this.boostTimer.start();
-    // }
+    
     @Override
     public void render(Graphics g) {
         this.status = new Status<>(null);
         g.drawImage(this.sprites[this.isBoosting][this.direction].getScaledInstance(
-                50, 100, Image.SCALE_DEFAULT), this.position.getX(), this.position.getY(), null);
+                40, 70, Image.SCALE_DEFAULT), this.position.getX(), this.position.getY(), null);
     }
 
     @Override
@@ -75,7 +66,7 @@ public class Ship extends MortalEntity<ShipStats> {
     }
 
     public void moveDown() {
-        if (this.position.getY() < 600 - 50) {
+        if (this.position.getY() < 700) {
             this.position.setY(this.position.getY() + this.speed);
         }
     }
@@ -90,7 +81,7 @@ public class Ship extends MortalEntity<ShipStats> {
     }
 
     public void moveRight() {
-        if (this.position.getX() < 800 - 126) {
+        if (this.position.getX() < 800) {
             this.position.setX(this.position.getX() + this.speed);
         }
         if (this.direction < 4) {
