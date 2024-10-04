@@ -9,33 +9,33 @@ import javax.imageio.ImageIO;
 public class AssetManager {
     private static BufferedImage[][] sprites;
     private static BufferedImage[][] lazers;
+    private static BufferedImage[][] enemies;
 
     public static BufferedImage[][] getEnemyAssets() {
-
-        if (AssetManager.sprites != null) {
-            return AssetManager.sprites;
+        if (AssetManager.enemies != null) {
+            return AssetManager.enemies;
         }
-
         int width = 16, height = 24;
 
-        AssetManager.sprites = new BufferedImage[1][2];
-        String filePath1 = "/assets/spritesheets/enemy-medium.png";
-        String filePath2 = "/assets/spritesheets/enemy-big.png";
+        String filePath1 = "/assets/spritesheets/enemy.png";
+        String filePath2 = "/assets/spritesheets/enemy.png";
 
         List<String> paths = List.of(filePath1, filePath2);
 
+        AssetManager.enemies = new BufferedImage[2][5];
+
         try {
-            BufferedImage image = ImageIO.read(AssetManager.class.getResource(paths.get((int) Math.round(Math.random()*2))));
-            for (int i = 0; i < 1; i++) {
-                for (int j = 0; j < 2; j++) {
-                    sprites[i][j] = image.getSubimage(j * width, i * height, width, height);
+            BufferedImage image = ImageIO.read(AssetManager.class.getResource(paths.get((int) Math.round(Math.random() * 1))));
+            for (int i = 0; i < 2; i++) {
+                for (int j = 0; j < 5; j++) {
+                    enemies[i][j] = image.getSubimage(j * width, i * height, width, height);
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return sprites;
+        return enemies;
     }
 
     public static BufferedImage[][] getShipAssets() {
@@ -70,7 +70,7 @@ public class AssetManager {
 
         int width = 16, height = 16;
         String filePath = "/assets/spritesheets/laser-bolts.png";
-         AssetManager.lazers = new BufferedImage[2][2];
+        AssetManager.lazers = new BufferedImage[2][2];
         
         try {
             BufferedImage image = ImageIO.read(AssetManager.class.getResource(filePath));

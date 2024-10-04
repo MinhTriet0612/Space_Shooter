@@ -5,25 +5,30 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
+import org.example.common.ScreenAttributeConstant;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
-@NoArgsConstructor
+@AllArgsConstructor
 public class App extends JFrame {
     private List<Scene> screens = new ArrayList<>();
     private Scene currentScene;
 
     public App(Scene scene) {
-        // this.pack();
-        this.screens.add(scene);
-        this.currentScene = scene;
-        this.setVisible(true);
-        this.setSize(800, 800);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.pack();
         this.add(scene);
+        this.screens.add(scene);
+        this.setVisible(true);
+        this.currentScene = scene;
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(
+            ScreenAttributeConstant.APPSCENE_WIDTH, 
+            ScreenAttributeConstant.APPSCENE_HEIGHT
+        );
     }
 
     public void start() {

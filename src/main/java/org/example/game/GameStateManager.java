@@ -27,7 +27,7 @@ public class GameStateManager {
     }
 
     public void render(Graphics g) {
-        system.render(g);
+        // system.render(g);
         // Iterator<LazerBolt> iterator = lazerBolts.iterator();
         // while (iterator.hasNext()) {
         //     LazerBolt lazer = iterator.next();

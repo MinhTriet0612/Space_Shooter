@@ -15,13 +15,13 @@ import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 public class Ship extends MortalEntity<ShipStats> {
-    private final BufferedImage[][] sprites = AssetManager.getShipAssets();
-    private int isBoosting;
+    private int speed;
     private int direction;
+    private int isBoosting;
+    private final BufferedImage[][] sprites = AssetManager.getShipAssets();
     private final Timer boostTimer = new Timer(130, e -> this.updateShipBoost());
     private Timer limitFireRate;
     private int fireRate;
-    private int speed;
     private boolean canFire;
     
     @Override

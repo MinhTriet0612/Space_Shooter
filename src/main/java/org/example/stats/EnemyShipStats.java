@@ -1,7 +1,7 @@
 package org.example.stats;
 
-import lombok.Builder;
+import lombok.experimental.SuperBuilder;
 
-@Builder
+@SuperBuilder
 public class EnemyShipStats extends ShipStats { 
 }

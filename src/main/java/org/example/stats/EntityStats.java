@@ -1,11 +1,12 @@
 package org.example.stats;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
+@SuperBuilder
 public abstract class EntityStats extends Stats {
     protected int health;
 }

@@ -3,6 +3,7 @@ package org.example.entities;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import javax.swing.Timer;
 
@@ -15,6 +16,7 @@ import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 public class Monster extends MortalEntity<MonsterStats> {
+
     private final BufferedImage[][] sprites = AssetManager.getEnemyAssets();
     private int isBoosting;
     private int direction;
@@ -23,17 +25,20 @@ public class Monster extends MortalEntity<MonsterStats> {
     private int fireRate;
     private int speed;
     private boolean canFire;
-    
+    private final List<Integer> verRange = List.of(4, 1, 2, 0, 0, 0, 0); // doc
+    private final List<Integer> horRange = List.of(1, -1, 0, 0, 0, 0); // ngangsa 
+
     @Override
     public void render(Graphics g) {
         this.status = new Status<>(null);
-        g.drawImage(this.sprites[this.isBoosting][this.direction].getScaledInstance(
-                20, 50, Image.SCALE_AREA_AVERAGING), this.position.getX(), this.position.getY(), null);
+        g.drawImage(this.sprites[isBoosting][direction].getScaledInstance(
+                30, 55, Image.SCALE_AREA_AVERAGING), this.position.getX(), this.position.getY(), null);
     }
 
     @Override
     public void update(float deltaTime) {
-        this.position.setY(this.position.getY() + this.speed);
+        this.position.setY(this.position.getY() + this.verRange.get((int) Math.round(Math.random() * 5)));
+        this.position.setX(this.position.getX() + this.horRange.get((int) Math.round(Math.random() * 5)));
     }
 
     @Override
@@ -58,36 +63,32 @@ public class Monster extends MortalEntity<MonsterStats> {
         this.boostTimer.start();
     }
 
-    // public void moveUp() {
-    //     if (this.position.getY() > 2) {
-    //         this.position.setY(this.position.getY() - this.speed);
-    //     }
-    // }
-
-    // public void moveDown() {
-    //     if (this.position.getY() < 600 - 50) {
-    //         this.position.setY(this.position.getY() + this.speed);
-    //     }
-    // }
-
-    // public void moveLeft() {
-    //     if (this.position.getX() > 0) {
-    //         this.position.setX(this.position.getX() - this.speed);
-    //     }
-    //     if (this.direction > 0) {
-    //         this.direction -= 1;
-    //     }
-    // }
-
-    // public void moveRight() {
-    //     if (this.position.getX() < 800 - 126) {
-    //         this.position.setX(this.position.getX() + this.speed);
-    //     }
-    //     if (this.direction < 4) {
-    //         this.direction += 1;
-    //     }
-    // }
-
+    public void moveUp() {
+        if (this.position.getY() > 2) {
+            this.position.setY(this.position.getY() - this.speed);
+        }
+    }
+    public void moveDown() {
+        if (this.position.getY() < 600 - 50) {
+            this.position.setY(this.position.getY() + this.speed);
+        }
+    }
+    public void moveLeft() {
+        if (this.position.getX() > 0) {
+            this.position.setX(this.position.getX() - this.speed);
+        }
+        if (this.direction > 0) {
+            this.direction -= 1;
+        }
+    }
+    public void moveRight() {
+        if (this.position.getX() < 800 - 126) {
+            this.position.setX(this.position.getX() + this.speed);
+        }
+        if (this.direction < 4) {
+            this.direction += 1;
+        }
+    }
     public void reRenderDirection() {
         this.direction = 2;  // Reset direction to neutral (center) when no left/right is pressed
     }

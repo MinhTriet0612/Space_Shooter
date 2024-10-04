@@ -12,7 +12,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-// @SuperBuilder
 public abstract class World {
     protected List<GameSystem> systems = new ArrayList<>();
     protected List<Entity<?>> entities = new ArrayList<>();

@@ -1,7 +1,5 @@
 package org.example.system.controller;
 
-import java.awt.Graphics;
-
 import org.example.entities.Ship;
 import org.example.input.ShipControlInput;
 
@@ -15,7 +13,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ShipController extends ControllerSystem {
-
     private Ship ship;
     private ShipControlInput input;
 
@@ -36,10 +33,5 @@ public class ShipController extends ControllerSystem {
         //     fireLazerBolt();
         //     input.space = false;
         // }
-    }
-
-    @Override
-    public void render(Graphics g) {
-        this.ship.render(g);
     }
 }
