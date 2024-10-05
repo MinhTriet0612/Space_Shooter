@@ -2,6 +2,7 @@ package org.example.item;
 
 import org.example.entities.BaseEntity;
 import org.example.stats.ItemStats;
+import org.example.stats.LazerGunStats;
 import org.example.system.status.Status;
 
 import lombok.Getter;

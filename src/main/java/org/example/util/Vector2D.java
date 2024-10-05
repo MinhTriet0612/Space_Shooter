@@ -29,7 +29,7 @@ public class Vector2D {
 
     public Vector2D normalize() {
         double mag = magnitude();
-        return new Vector2D((int)(x / mag), (int)(y / mag));
+        return new Vector2D((int) (x / mag), (int) (y / mag));
     }
 
     public Vector2D scale(int factor) {

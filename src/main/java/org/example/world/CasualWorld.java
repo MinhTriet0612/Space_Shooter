@@ -13,7 +13,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class CasualWorld extends World {
-
     @Override
     public void update(float deltaTime) {
         ListIterator<GameSystem> systemIt = this.systems.listIterator();
@@ -21,8 +20,12 @@ public class CasualWorld extends World {
 
         while(entityIt.hasNext()) {
             Entity<?> e = entityIt.next();
-            if (e.getPosition().getY() >= 800 || e.getPosition().getY() <= -1*ScreenAttributeConstant.CASUALPLAYSCENE_HEIGHT) entityIt.remove();
             e.update(1f);
+            if (
+                    e.getPosition().getY() <= -1 * ScreenAttributeConstant.CASUALPLAYSCENE_HEIGHT
+                    || e.getPosition().getY() >= 1 * ScreenAttributeConstant.CASUALPLAYSCENE_HEIGHT
+                    // || e instanceof MortalEntity mortalE && mortalE.isDead()
+                ) entityIt.remove();
         }
 
         while(systemIt.hasNext()) {

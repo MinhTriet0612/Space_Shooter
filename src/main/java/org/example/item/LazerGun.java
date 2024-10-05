@@ -18,12 +18,8 @@ import javax.swing.Timer;
 @Setter
 @SuperBuilder
 public class LazerGun extends Weapon<LazerGunStats> { 
-    private final Timer reloadAmmunition = new Timer(1000, e -> {
-        this.reloadAmmunition();
-    });
-    private final Timer reloadForNextBullet = new Timer(150, e -> {
-        this.reloadForNextBullet();
-    });
+    private final Timer reloadAmmunition = new Timer(1000, e -> this.reloadAmmunition());
+    private final Timer reloadForNextBullet = new Timer(150, e -> this.reloadForNextBullet());
 
     @Override
     public Bullet fire(Vector2D position) {

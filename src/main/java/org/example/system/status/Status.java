@@ -4,21 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.example.stats.Stats;
+import org.example.util.DeepCopyUtils;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-// @SuperBuilder
 public class Status<T extends Stats> {
     private T currentStast;
     private T initStast;
     private List<Effect> effects;
 
     public Status(T stats) {
-        this.initStast = stats;
-        this.currentStast = stats;
+        this.initStast = DeepCopyUtils.copy(stats);
+        this.currentStast = DeepCopyUtils.copy(stats);
         this.effects = new ArrayList<>();
     }
 }
