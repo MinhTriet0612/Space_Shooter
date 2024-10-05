@@ -10,6 +10,7 @@ import org.example.assets.AssetManager;
 import org.example.stats.ShipStats;
 import org.example.system.status.Status;
 import org.example.util.Response;
+import org.example.util.Vector2D;
 
 import lombok.experimental.SuperBuilder;
 
@@ -19,10 +20,9 @@ public class Ship extends MortalEntity<ShipStats> {
     private int direction;
     private int isBoosting;
     private final BufferedImage[][] sprites = AssetManager.getShipAssets();
-    private final Timer boostTimer = new Timer(130, e -> this.updateShipBoost());
-    private Timer limitFireRate;
-    private int fireRate;
-    private boolean canFire;
+    private final Timer boostTimer = new Timer(130, e -> {
+        this.updateShipBoost();
+    });
     
     @Override
     public void render(Graphics g) {
@@ -30,6 +30,17 @@ public class Ship extends MortalEntity<ShipStats> {
         g.drawImage(this.sprites[this.isBoosting][this.direction].getScaledInstance(
                 40, 70, Image.SCALE_DEFAULT), this.position.getX(), this.position.getY(), null);
     }
+    
+    @Override
+    public Bullet useWeapon() {
+        // if(this.canFire) { // handle at weapon
+        //     this.canFire = false;
+        //     this.reloadTimer.stop(); // handle at weapon
+        //     return this.weapon.fire(new Vector2D(this.position.getX() - 5, this.position.getY() - 8));
+        // } else this.reloadTimer.start();
+        // return null;
+        return this.weapon.fire(new Vector2D(this.position.getX() - 5, this.position.getY() - 8));
+    } 
 
     @Override
     public void update(float deltaTime) {
@@ -57,6 +68,7 @@ public class Ship extends MortalEntity<ShipStats> {
 
     public void startTimer() {
         this.boostTimer.start();
+        // this.reloadTimer.start();
     }
 
     public void moveUp() {

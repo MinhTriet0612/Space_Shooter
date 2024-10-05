@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import org.example.assets.AssetManager;
+import org.example.common.ScreenAttributeConstant;
 
 public class CasualPlaySceneBackground {
     private final BufferedImage backgroundImage;
@@ -13,6 +14,8 @@ public class CasualPlaySceneBackground {
     }
 
     public void draw(Graphics g) {
-        g.drawImage(this.backgroundImage, 0, 0, 800, 800, null);
+        g.drawImage(this.backgroundImage, 0, 0, 
+            ScreenAttributeConstant.APPSCENE_WIDTH, ScreenAttributeConstant.APPSCENE_HEIGHT, null
+        );
     }
 }

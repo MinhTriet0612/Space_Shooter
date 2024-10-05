@@ -39,7 +39,6 @@ public class AssetManager {
     }
 
     public static BufferedImage[][] getShipAssets() {
-
         if (AssetManager.sprites != null) {
             return AssetManager.sprites;
         }
@@ -64,16 +63,17 @@ public class AssetManager {
     }
 
     public static BufferedImage[][] getLazerBoltAssets() {
-        if (AssetManager.lazers != null) {
-            return AssetManager.lazers;
-        }
+        // if (AssetManager.lazers != null) {
+        //     return AssetManager.lazers;
+        // }
 
         int width = 16, height = 16;
-        String filePath = "/assets/spritesheets/laser-bolts.png";
+
+        List<String> paths = List.of("/assets/spritesheets/power-up.png", "/assets/spritesheets/laser-bolts.png");
         AssetManager.lazers = new BufferedImage[2][2];
         
         try {
-            BufferedImage image = ImageIO.read(AssetManager.class.getResource(filePath));
+            BufferedImage image = ImageIO.read(AssetManager.class.getResource(paths.get((int) Math.round(Math.random() * 1))));
             for (int i = 0; i < 2; i++) {
                 for (int j = 0; j < 2; j++) {
                     lazers[i][j] = image.getSubimage(j * width, i * height, width, height);

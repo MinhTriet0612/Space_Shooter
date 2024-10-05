@@ -11,11 +11,13 @@ import lombok.experimental.SuperBuilder;
 public abstract class MortalEntity<S extends MortalEntityStats> extends Entity<S> {
     @Setter
     @Getter
-    protected Weapon weapon;
+    protected Weapon<?> weapon;
     
     public boolean isDead() {
         return this.status.getCurrentStast().getHealth() <= 0;
     }
+
+    public abstract Bullet useWeapon();
 
     public void injure(int damage) {
         this.status.getCurrentStast()

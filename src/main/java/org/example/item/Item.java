@@ -2,15 +2,16 @@ package org.example.item;
 
 import org.example.entities.BaseEntity;
 import org.example.stats.ItemStats;
-import org.example.stats.Stats;
 import org.example.system.status.Status;
 
 import lombok.Getter;
-import lombok.Setter; 
+import lombok.Setter;
+import lombok.experimental.SuperBuilder; 
 
 @Setter
 @Getter
-public abstract class Item extends BaseEntity {
-    protected Status<ItemStats> status;
+@SuperBuilder
+public abstract class Item<T extends ItemStats> extends BaseEntity {
+    protected Status<T> status;
     public abstract void update(float deltaTime);
 }

@@ -1,5 +1,9 @@
 package org.example.system.controller;
 
+import java.util.ListIterator;
+
+import org.example.entities.Bullet;
+import org.example.entities.Entity;
 import org.example.entities.Ship;
 import org.example.input.ShipControlInput;
 
@@ -10,11 +14,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class ShipController extends ControllerSystem {
     private Ship ship;
-    private ShipControlInput input;
+    private ShipControlInput input; 
 
     @Override
     public void update(float d) {
@@ -28,10 +32,11 @@ public class ShipController extends ControllerSystem {
             this.ship.moveRight();
         } else {
             this.ship.reRenderDirection();
+        } 
+        if (input.isSpace()) {
+            ListIterator<Entity<?>> entitiesIt = this.getWorld().getEntities().listIterator();
+            Bullet bullet = this.ship.useWeapon();
+            if (bullet != null) entitiesIt.add(bullet);
         }
-        // if (input.space) {
-        //     fireLazerBolt();
-        //     input.space = false;
-        // }
     }
 }

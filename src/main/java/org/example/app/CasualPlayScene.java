@@ -42,6 +42,7 @@ public class CasualPlayScene extends Scene {
         ShipController shipController = new ShipController(playerShip, shipCtrlInput);
         
         monsterSponsor.setWorld(world);
+        shipController.setWorld(world);
         this.world.getEntities().add(playerShip);
         this.world.getSystems().addAll(List.of(shipController, monsterSponsor));
 
@@ -61,7 +62,7 @@ public class CasualPlayScene extends Scene {
             this.world.update(1f);
             repaint();
             try {
-                Thread.sleep(15);
+                Thread.sleep(16);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -78,7 +79,7 @@ public class CasualPlayScene extends Scene {
     @Override
     public void inDispose() {
         this.isRunning = false;
-        gameThread.interrupt();
+        this.gameThread.interrupt();
         this.setFocusable(true); 
     }
 

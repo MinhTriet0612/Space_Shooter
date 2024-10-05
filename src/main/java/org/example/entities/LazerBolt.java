@@ -1,11 +1,6 @@
 package org.example.entities;
 
 import lombok.Getter;
-import org.example.assets.AssetManager;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 @Getter
 public class LazerBolt {
@@ -29,12 +24,10 @@ public class LazerBolt {
     //     lazerAnimationTimer.start();
     // }
 
-
     // public void update() {
     //     move();
     //     // auto destroy lazer bolt if it goes out of bounds
     // }
-
 
     // public void move() {
     //     y -= 10;

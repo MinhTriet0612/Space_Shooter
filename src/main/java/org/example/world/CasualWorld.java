@@ -3,6 +3,7 @@ package org.example.world;
 import java.awt.Graphics;
 import java.util.ListIterator;
 
+import org.example.common.ScreenAttributeConstant;
 import org.example.entities.Entity;
 import org.example.system.GameSystem;
 
@@ -20,7 +21,7 @@ public class CasualWorld extends World {
 
         while(entityIt.hasNext()) {
             Entity<?> e = entityIt.next();
-            if (e.getPosition().getY() >= 800) entityIt.remove();
+            if (e.getPosition().getY() >= 800 || e.getPosition().getY() <= -1*ScreenAttributeConstant.CASUALPLAYSCENE_HEIGHT) entityIt.remove();
             e.update(1f);
         }
 

@@ -8,5 +8,6 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder
 public abstract class WeaponStats extends ItemStats  {
-    protected int power, mass;
+    protected int power, mass, ammunition;
+    protected boolean isReload;
 }

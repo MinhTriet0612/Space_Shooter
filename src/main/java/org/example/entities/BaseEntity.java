@@ -11,17 +11,14 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
-// Saving Game State, Persisting Sessions, Realtime Across Networking
-public class BaseEntity implements Serializable { 
+public class BaseEntity implements Serializable {
     private UUID id;
-    private Boolean isDeleted;
     private Instant createdDate, updatedDate;
     private static final long serialVersionUID = -863164858986274318L;
 
     public BaseEntity() {
-        this.isDeleted = false;
-        this.updatedDate = null;
         this.id = UUID.randomUUID();
+        this.updatedDate = Instant.now();
         this.createdDate = Instant.now();
     }
 }

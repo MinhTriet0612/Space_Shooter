@@ -27,15 +27,6 @@ public class EnemyShip extends MortalEntity<EnemyShipStats> {
     private int fireRate = 150;
     private boolean canFire = true;
 
-    // public EnemyShip(ShipStats stats) {
-    //     this.status = new Status<>(stats);
-    //     this.position = new Vector2D(300, 0);
-    //     this.rigid = new Rectangle(50, 80);
-    //     this.boostTimer = new Timer(130, e -> updateShipBoost());
-    //     this.sprites = AssetManager.getShipAssets();
-    //     this.boostTimer.start();
-    // }
-
     @Override
     public void render(Graphics g) {
         g.drawImage(this.sprites[this.isBoosting][this.direction].getScaledInstance(
@@ -49,8 +40,6 @@ public class EnemyShip extends MortalEntity<EnemyShipStats> {
 
     @Override
     public void onCollisionStay(Entity other, Response response) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'onCollisionStay'");
     }
 
     @Override
@@ -101,6 +90,11 @@ public class EnemyShip extends MortalEntity<EnemyShipStats> {
 
     public void updateShipBoost() {
         this.isBoosting = (this.isBoosting == 0) ? 1 : 0;
+    }
+
+    @Override
+    public Bullet useWeapon() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }

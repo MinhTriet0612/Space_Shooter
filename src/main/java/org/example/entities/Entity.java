@@ -4,7 +4,6 @@ import java.awt.Graphics;
 
 import org.example.shape.Rigid;
 import org.example.stats.EntityStats;
-import org.example.stats.Stats;
 import org.example.system.status.Status;
 import org.example.util.Response;
 import org.example.util.Vector2D;
