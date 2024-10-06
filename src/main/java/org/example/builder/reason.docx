@@ -1,0 +1,2 @@
+Mục đích chính của folder là đại diện cho builder class (không dùng static inner class để lam builder).
+Tạm thời dùng để tạo nhanh entity với các variable fixed để dựng hoàn thiện game base.
