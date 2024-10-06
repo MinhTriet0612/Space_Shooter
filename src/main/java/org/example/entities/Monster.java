@@ -9,9 +9,8 @@ import javax.swing.Timer;
 
 import org.example.assets.AssetManager;
 import org.example.stats.MonsterStats;
-import org.example.system.status.Status;
+import org.example.util.DeepCopyUtils;
 import org.example.util.Response;
-import org.example.util.Vector2D;
 
 import lombok.experimental.SuperBuilder;
 
@@ -20,42 +19,30 @@ public class Monster extends MortalEntity<MonsterStats> {
     private int speed;
     private int direction;
     private int isBoosting;
+    private int movePoint;
     private final BufferedImage[][] sprites = AssetManager.getEnemyAssets();
-    private final Timer boostTimer = new Timer(130, e -> this.updateShipBoost());
-    private Timer limitFireRate;
-    private int fireRate;
-    private boolean canFire; // handle at weapon
-    private final Timer reloadTimer = new Timer(150, e -> {
-        this.realoadBullet();
-    });
-    private final List<Integer> verRange = List.of(4, 1, 2, 0, 0, 0, 0); // doc
-    private final List<Integer> horRange = List.of(3, -3, 0, 0, 0, 0, 0); // ngang
+    private final Timer boostTimer = new Timer(130, e -> this.updateShipBoost()); 
+    private final Timer movePointTimer = new Timer(1000, e -> this.updatedMovePoint());
+    private final List<Integer> 
+        verRange = List.of(1, 2, 3, 4, 0, 1, 2, 3, 4, 0), // doc
+        horRange = List.of(1, 2, 3, 4, 0, -1, -2, -3, -4, -0); // ngang
 
     @Override
     public void render(Graphics g) {
-        this.status = new Status<>(null);
         g.drawImage(this.sprites[isBoosting][direction].getScaledInstance(
                 30, 55, Image.SCALE_AREA_AVERAGING), this.position.getX(), this.position.getY(), null);
     }
 
     @Override
-    public Bullet useWeapon() {
-        if(this.canFire) { // handle at weapon
-            this.canFire = false;
-            this.reloadTimer.stop(); // handle at weapon
-            return this.weapon.fire(new Vector2D(this.position.getX() - 100, this.position.getY()));
-        } else this.reloadTimer.start();
-        return null;  
-    }
-
-    public void realoadBullet() {  // handle at weapon
-        this.canFire = true;
-    }
+    public void useWeapon() {
+        Bullet bullet = this.weapon.fire(DeepCopyUtils.copy(this.position));
+        if (bullet != null) this.world.getEntities().listIterator().add(bullet);
+    } 
 
     @Override
     public void update(float deltaTime) {
-        this.position.setY(this.position.getY() + this.verRange.get((int) Math.round(Math.random() * 5)));
-        this.position.setX(this.position.getX() + this.horRange.get((int) Math.round(Math.random() * 5)));
+        this.position.setY(this.position.getY() + this.verRange.get(this.movePoint));
+        this.position.setX(this.position.getX() + this.horRange.get(this.movePoint));
     }
 
     @Override
@@ -78,6 +65,11 @@ public class Monster extends MortalEntity<MonsterStats> {
 
     public void startTimer() {
         this.boostTimer.start();
+        this.movePointTimer.start();
+    }
+
+    public void updatedMovePoint() {
+        this.movePoint = (int) Math.round(Math.random() * (this.verRange.size() - 1));
     }
 
     public void moveUp() {

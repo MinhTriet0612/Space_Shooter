@@ -17,12 +17,10 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
-public class Bullet extends Entity<BulletStats> { 
-    private final BufferedImage[][] bullets = AssetManager.getLazerBoltAssets();
+public class Bullet extends Entity<BulletStats> {
     private int direct;
-    private final Timer bulletAnimationTimer = new Timer(100, e -> {
-        this.direct = this.direct != 0 ? 0 : 1;
-    });
+    private final BufferedImage[][] bullets = AssetManager.getLazerBoltAssets();
+    private final Timer bulletAnimationTimer = new Timer(150, e -> this.direct = this.direct != 0 ? 0 : 1);
 
     @Override
     public void render(Graphics g) {

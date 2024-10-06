@@ -13,13 +13,13 @@ public class ShipControlInput implements KeyListener {
     private boolean up, down, left, right, space, enter;
 
     public ShipControlInput() {
-        this.keys = new boolean[365];
         this.up = false;
-        this.down = false;
         this.left = true;
-        this.right = false;
+        this.down = false;
         this.space = false;
         this.enter = false;
+        this.right = false;
+        this.keys = new boolean[256];
     }
 
     public void update() {

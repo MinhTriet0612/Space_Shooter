@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
-public abstract class Entity<S extends EntityStats> extends BaseEntity {
+public abstract class Entity<S extends EntityStats> extends BaseObject {
     protected Rigid rigid;
     protected Status<S> status;
     protected Vector2D position;

@@ -9,6 +9,7 @@ import javax.swing.Timer;
 import org.example.assets.AssetManager;
 import org.example.stats.ShipStats;
 import org.example.system.status.Status;
+import org.example.util.DeepCopyUtils;
 import org.example.util.Response;
 import org.example.util.Vector2D;
 
@@ -23,29 +24,21 @@ public class Ship extends MortalEntity<ShipStats> {
     private final Timer boostTimer = new Timer(130, e -> {
         this.updateShipBoost();
     });
-    
+
     @Override
     public void render(Graphics g) {
-        this.status = new Status<>(null);
         g.drawImage(this.sprites[this.isBoosting][this.direction].getScaledInstance(
                 40, 70, Image.SCALE_DEFAULT), this.position.getX(), this.position.getY(), null);
     }
-    
+
     @Override
-    public Bullet useWeapon() {
-        // if(this.canFire) { // handle at weapon
-        //     this.canFire = false;
-        //     this.reloadTimer.stop(); // handle at weapon
-        //     return this.weapon.fire(new Vector2D(this.position.getX() - 5, this.position.getY() - 8));
-        // } else this.reloadTimer.start();
-        // return null;
-        return this.weapon.fire(new Vector2D(this.position.getX() - 5, this.position.getY() - 8));
+    public void useWeapon() {
+        Bullet bullet = this.weapon.fire(DeepCopyUtils.copy(this.position));
+        if(bullet != null) this.world.getEntities().add(bullet);
     } 
 
     @Override
     public void update(float deltaTime) {
-        // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override

@@ -6,16 +6,11 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.Timer;
 
-import org.example.assets.AssetManager;
-import org.example.shape.Rectangle;
 import org.example.stats.EnemyShipStats;
-import org.example.stats.ShipStats;
-import org.example.system.status.Status;
 import org.example.util.Response;
-import org.example.util.Vector2D;
-
 import lombok.experimental.SuperBuilder;
 
+// Not use
 @SuperBuilder
 public class EnemyShip extends MortalEntity<EnemyShipStats> {
     private BufferedImage[][] sprites;
@@ -93,7 +88,7 @@ public class EnemyShip extends MortalEntity<EnemyShipStats> {
     }
 
     @Override
-    public Bullet useWeapon() {
+    public void useWeapon() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     

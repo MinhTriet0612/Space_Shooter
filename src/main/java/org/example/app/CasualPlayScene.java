@@ -9,6 +9,7 @@ import org.example.builder.ShipBuilder;
 import org.example.common.ScreenAttributeConstant;
 import org.example.entities.Ship;
 import org.example.input.ShipControlInput;
+import org.example.system.GameSystem;
 import org.example.system.controller.MonsterSponsor;
 import org.example.system.controller.ShipController;
 import org.example.world.CasualWorld;
@@ -23,28 +24,37 @@ public class CasualPlayScene extends Scene {
     private CasualWorld world;
     private final Thread gameThread;
     private final ShipControlInput shipCtrlInput;
-    private CasualPlaySceneBackground casualPlaySceneBackground;
+    private final CasualPlaySceneBackground casualPlaySceneBackground;
 
     public CasualPlayScene() {
         this.isRunning = true;
+        this.gameThread = new Thread(this);
+        this.shipCtrlInput = new ShipControlInput();
         this.setPreferredSize(
             new Dimension(
-                ScreenAttributeConstant.CASUALPLAYSCENE_WIDTH, 
+                ScreenAttributeConstant.CASUALPLAYSCENE_WIDTH,
                 ScreenAttributeConstant.CASUALPLAYSCENE_HEIGHT)
         );
         this.casualPlaySceneBackground = new CasualPlaySceneBackground();
-        this.gameThread = new Thread(this);
-        this.shipCtrlInput = new ShipControlInput();
 
         this.world = new CasualWorld();
+
         Ship playerShip = ShipBuilder.shipBuilder();
-        MonsterSponsor monsterSponsor = new MonsterSponsor();
-        ShipController shipController = new ShipController(playerShip, shipCtrlInput);
+        List<GameSystem> systemInits = List.of(
+            new MonsterSponsor(),
+            new ShipController(playerShip, shipCtrlInput)
+        );
         
-        monsterSponsor.setWorld(world);
-        shipController.setWorld(world);
+        systemInits.forEach(system -> {
+            system.setWorld(world);
+            if (system instanceof ShipController shipController) {
+                shipController.setShip(playerShip);
+                shipController.getShip().setWorld(world);
+            }
+        });
+
         this.world.getEntities().add(playerShip);
-        this.world.getSystems().addAll(List.of(shipController, monsterSponsor));
+        this.world.getSystems().addAll(systemInits);
 
         this.setFocusable(true);
         this.addKeyListener(shipCtrlInput);

@@ -2,22 +2,24 @@ package org.example.entities;
 
 import org.example.item.Weapon;
 import org.example.stats.MortalEntityStats;
+import org.example.world.World;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+@Setter
+@Getter
 @SuperBuilder
 public abstract class MortalEntity<S extends MortalEntityStats> extends Entity<S> {
-    @Setter
-    @Getter
     protected Weapon<?> weapon;
+    protected World world;
     
     public boolean isDead() {
         return this.status.getCurrentStast().getHealth() <= 0;
     }
 
-    public abstract Bullet useWeapon();
+    public abstract void useWeapon();
 
     public void injure(int damage) {
         this.status.getCurrentStast()

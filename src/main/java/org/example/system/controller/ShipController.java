@@ -19,7 +19,7 @@ import lombok.Setter;
 public class ShipController extends ControllerSystem {
     private Ship ship;
     private ShipControlInput input; 
-
+    
     @Override
     public void update(float d) {
         if (this.input.isUp()) {
@@ -30,13 +30,7 @@ public class ShipController extends ControllerSystem {
             this.ship.moveLeft();
         } else if (input.isRight()) {
             this.ship.moveRight();
-        } else {
-            this.ship.reRenderDirection();
-        } 
-        if (input.isSpace()) {
-            ListIterator<Entity<?>> entitiesIt = this.getWorld().getEntities().listIterator();
-            Bullet bullet = this.ship.useWeapon();
-            if (bullet != null) entitiesIt.add(bullet);
-        }
+        } else this.ship.reRenderDirection();
+        if (input.isSpace()) this.ship.useWeapon();
     }
 }

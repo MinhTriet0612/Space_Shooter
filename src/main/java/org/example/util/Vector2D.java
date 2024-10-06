@@ -1,15 +1,16 @@
 package org.example.util;
 
+import org.example.entities.BaseObject;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-// @Builder
 @AllArgsConstructor
-public class Vector2D {
-    private int x, y; 
+public class Vector2D extends BaseObject {
+    private int x, y;
 
     public double angle() {
         return Math.atan2(y, x);

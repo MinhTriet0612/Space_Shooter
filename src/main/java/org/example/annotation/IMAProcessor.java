@@ -1,4 +1,4 @@
-package org.example.anno;
+package org.example.annotation;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
@@ -14,9 +14,8 @@ import java.io.Writer;
 import java.util.Set;
 
 @SupportedAnnotationTypes("org.example.anno.IMA")
-@SupportedSourceVersion(SourceVersion.RELEASE_8)
+@SupportedSourceVersion(SourceVersion.RELEASE_17)
 public class IMAProcessor extends AbstractProcessor {
-
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         for (Element e : roundEnv.getElementsAnnotatedWith(IMA.class)) {
