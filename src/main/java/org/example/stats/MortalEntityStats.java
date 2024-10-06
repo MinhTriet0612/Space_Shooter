@@ -8,6 +8,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 public abstract class MortalEntityStats extends EntityStats {
-    protected int speed;
-    protected int def;
+  protected int health;
+  protected int speed;
+  protected int def;
 }

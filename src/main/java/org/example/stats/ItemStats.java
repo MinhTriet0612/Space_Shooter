@@ -8,5 +8,5 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 public abstract class ItemStats extends Stats {
-    
+
 }

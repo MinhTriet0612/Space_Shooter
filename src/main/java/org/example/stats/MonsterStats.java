@@ -8,5 +8,5 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 public class MonsterStats extends MortalEntityStats {
-    private final int damage = this.health / 20;
+  private final int damage = this.health / 20;
 }

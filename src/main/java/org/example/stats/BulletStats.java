@@ -7,6 +7,6 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
-public class BulletStats extends EntityStats { 
-    private int speed, damage;
+public class BulletStats extends EntityStats {
+  private int speed, damage;
 }

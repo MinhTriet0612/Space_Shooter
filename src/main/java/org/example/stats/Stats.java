@@ -1,6 +1,6 @@
 package org.example.stats;
 
-import org.example.entities.BaseObject;
+import org.example.entity.BaseObject;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,4 +9,5 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Getter
 @SuperBuilder
-public abstract class Stats extends BaseObject {}
+public abstract class Stats extends BaseObject {
+}

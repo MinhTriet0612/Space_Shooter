@@ -8,5 +8,5 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder
 public class LazerGunStats extends WeaponStats {
-    private int critDame, critRate;
+  private int critDame, critRate;
 }

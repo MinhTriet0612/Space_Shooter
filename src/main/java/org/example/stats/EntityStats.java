@@ -8,5 +8,5 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 public abstract class EntityStats extends Stats {
-    protected int health;
+
 }

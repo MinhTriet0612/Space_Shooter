@@ -1,11 +1,8 @@
 package org.example.system.controller;
 
-import java.util.ListIterator;
-
-import org.example.entities.Bullet;
-import org.example.entities.Entity;
-import org.example.entities.Ship;
-import org.example.input.ShipControlInput;
+import org.example.entity.Ship;
+import org.example.input.ControllerInput;
+import java.awt.event.KeyEvent;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,20 +14,30 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShipController extends ControllerSystem {
-    private Ship ship;
-    private ShipControlInput input; 
-    
-    @Override
-    public void update(float d) {
-        if (this.input.isUp()) {
-            this.ship.moveUp();
-        } else if (input.isDown()) {
-            this.ship.moveDown();
-        } else if (input.isLeft()) {
-            this.ship.moveLeft();
-        } else if (input.isRight()) {
-            this.ship.moveRight();
-        } else this.ship.reRenderDirection();
-        if (input.isSpace()) this.ship.useWeapon();
+  private Ship ship;
+  private ControllerInput controllerInput;
+
+  @Override
+  public void update(float d) {
+    boolean up = controllerInput.isKeyDown(KeyEvent.VK_W) || controllerInput.isKeyDown(KeyEvent.VK_UP);
+    boolean down = controllerInput.isKeyDown(KeyEvent.VK_S) || controllerInput.isKeyDown(KeyEvent.VK_DOWN);
+    boolean left = controllerInput.isKeyDown(KeyEvent.VK_A) || controllerInput.isKeyDown(KeyEvent.VK_LEFT);
+    boolean right = controllerInput.isKeyDown(KeyEvent.VK_D) || controllerInput.isKeyDown(KeyEvent.VK_RIGHT);
+    boolean space = controllerInput.isKeyDown(KeyEvent.VK_SPACE);
+
+    if (up) {
+      this.ship.moveUp();
+    } else if (down) {
+      this.ship.moveDown();
+    } else if (left) {
+      this.ship.moveLeft();
+    } else if (right) {
+      this.ship.moveRight();
+    } else {
+      this.ship.reRenderDirection();
     }
+
+    if (space)
+      this.ship.useWeapon();
+  }
 }
