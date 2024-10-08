@@ -7,10 +7,12 @@ import org.example.stats.Stats;
 import org.example.util.DeepCopyUtils;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class Status<T extends Stats> {
   private T initStats;
   private T currentStats;

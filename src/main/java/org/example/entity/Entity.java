@@ -23,6 +23,17 @@ public abstract class Entity<S extends EntityStats> extends BaseObject {
   private boolean isCollidable = true;
   private boolean isVisible = true;
 
+  protected Entity(World world,Vector2D position, Vector2D velocity, boolean markAsRemoved,
+      boolean isCollidable, boolean isVisible) {
+        super();
+        this.world = world;
+        this.position = position;
+        this.velocity = velocity;
+        this.markAsRemoved = markAsRemoved;
+        this.isCollidable = isCollidable;
+        this.isVisible = isVisible;
+  }
+
   public Entity() {
   }
 

@@ -18,31 +18,37 @@ public class LazerGun extends Weapon<LazerGunStats> {
   private final Timer reloadAmmunition = new Timer(4000, e -> this.reloadAmmunition());
   private final Timer reloadForNextBullet = new Timer(150, e -> this.reloadForNextBullet());
 
+  public LazerGun(Status<LazerGunStats> status) {
+    this.status = status;
+  }
+
   @Override
   public Bullet fire(Vector2D position) {
-    if (this.status.getCurrentStats().getAmmunition() <= 0) {
+    LazerGunStats
+      initStats = this.status.getInitStats(),
+      currentStats = this.status.getCurrentStats();
+
+    if(!isFiring() || isReload()) return null;
+
+    if (currentStats.getAmmunition() == 1) {
       this.setReload(true);
       this.reloadAmmunition.start();
-      this.status.getCurrentStats().setAmmunition(this.status.getInitStats().getAmmunition());
-    } else if (this.isFiring() && !this.isReload()) {
-      this.setFiring(false);
-      this.status.getCurrentStats().setAmmunition(this.status.getCurrentStats().getAmmunition() - 1);
-      this.reloadForNextBullet.stop();
-      Bullet bullet = new Bullet();
-      bullet.setPosition(position);
-      return bullet;
-    } else {
-      this.reloadAmmunition.start();
-      this.reloadForNextBullet.start();
-    }
-    return null;
+      currentStats.setAmmunition(initStats.getAmmunition());
+    } 
+
+    this.setFiring(false);
+    this.reloadForNextBullet.start();
+    currentStats.setAmmunition(currentStats.getAmmunition() - 1);
+    return Bullet.builder().position(position).build();
   }
 
   public void reloadForNextBullet() {
     this.setFiring(true);
+    this.reloadForNextBullet.stop();
   }
 
   public void reloadAmmunition() {
+    this.reloadAmmunition.stop();
     this.setReload(false);
   }
 

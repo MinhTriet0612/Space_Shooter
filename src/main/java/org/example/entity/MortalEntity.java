@@ -2,6 +2,10 @@ package org.example.entity;
 
 import org.example.item.Weapon;
 import org.example.stats.MortalEntityStats;
+import org.example.system.status.Status;
+import org.example.util.Vector2D;
+import org.example.world.World;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +13,12 @@ import lombok.Setter;
 @Getter
 public abstract class MortalEntity<S extends MortalEntityStats> extends Entity<S> {
   private Weapon<?> weapon;
+
+  protected MortalEntity(World world, Vector2D position, Vector2D velocity, boolean markAsRemoved,
+      boolean isCollidable, boolean isVisible, Weapon<?> weapon) {
+    super(world, position, velocity, markAsRemoved, isCollidable, isVisible);
+    this.weapon = weapon;
+  }
 
   public boolean isDead() {
     return this.getStatus().getCurrentStats().getHealth() <= 0;

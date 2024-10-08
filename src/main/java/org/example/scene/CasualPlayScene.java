@@ -4,10 +4,14 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 
 import org.example.constant.ScreenAttributeConstant;
+import org.example.convenient.Test;
 import org.example.entity.Ship;
 import org.example.input.ControllerInput;
 import org.example.item.LazerGun;
+import org.example.stats.EnemyShipStats;
+import org.example.stats.ShipStats;
 import org.example.system.controller.ShipController;
+import org.example.system.status.Status;
 import org.example.world.CasualWorld;
 
 import lombok.Getter;
@@ -35,11 +39,10 @@ public class CasualPlayScene extends Scene {
     this.world = new CasualWorld();
 
     // Add ship entity and controller system to world
-    Ship<?> playerShip = new Ship<>();
-    playerShip.setWeapon(new LazerGun());
-    ShipController shipController = new ShipController(playerShip, controllerInput);
+    Ship ship = Test.genShip();
+    ShipController shipController = new ShipController(ship, controllerInput);
     this.world.addSystem(shipController);
-    this.world.addEntity(playerShip);
+    this.world.addEntity(ship);
 
     // Register controller input to this scene
     this.addKeyListener(controllerInput);

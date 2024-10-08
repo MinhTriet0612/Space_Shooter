@@ -64,13 +64,13 @@ public class AssetManager {
   }
 
   public static BufferedImage[][] getLazerBoltAssets() {
-    // if (AssetManager.lazers != null) {
-    // return AssetManager.lazers;
-    // }
+    if (AssetManager.lazers != null) {
+    return AssetManager.lazers;
+    }
 
     int width = 16, height = 16;
 
-    List<String> paths = List.of("/assets/spritesheets/power-up.png", "/assets/spritesheets/laser-bolts.png");
+    List<String> paths = List.of("/assets/spritesheets/laser-bolts.png");
     AssetManager.lazers = new BufferedImage[2][2];
 
     try {

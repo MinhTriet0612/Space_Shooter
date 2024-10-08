@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public abstract class Weapon<S extends WeaponStats> extends Item<S> {
-  private boolean isFiring, isReload;
+  private boolean isFiring = true, isReload = false;
 
   public abstract boolean setAuto();
 

@@ -14,7 +14,7 @@ public abstract class BaseObject implements Serializable {
   private Instant createdDate, updatedDate;
   private static final long serialVersionUID = -863164858986274318L;
 
-  public BaseObject() {
+  protected BaseObject() {
     this.uuid = UUID.randomUUID();
     this.updatedDate = Instant.now();
     this.createdDate = Instant.now();
