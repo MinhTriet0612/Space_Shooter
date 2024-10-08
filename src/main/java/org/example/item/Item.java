@@ -11,8 +11,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public abstract class Item<T extends ItemStats> extends BaseObject {
-  protected World world;
-  protected Status<T> status;
+  private World world;
+  private Status<T> status;
 
   public abstract void update(float deltaTime);
 }

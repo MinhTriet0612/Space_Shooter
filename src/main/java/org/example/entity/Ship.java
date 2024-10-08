@@ -6,8 +6,11 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.Timer;
 
+import org.example.rigid.Circle;
+import org.example.rigid.Rectangle;
 import org.example.rigid.Rigid;
 import org.example.stats.ShipStats;
+import org.example.system.status.Status;
 import org.example.util.AssetManager;
 import org.example.util.DeepCopyUtils;
 import org.example.util.Response;
@@ -17,8 +20,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Ship extends MortalEntity<ShipStats> {
-  private int speed;
+public class Ship<S extends ShipStats> extends MortalEntity<S> {
+  @SuppressWarnings("unchecked")
+  private Status<S> status = new Status<S>((S) new ShipStats());
+
   private int direction;
   private int isBoosting;
   private final BufferedImage[][] sprites = AssetManager.getShipAssets();
@@ -27,20 +32,20 @@ public class Ship extends MortalEntity<ShipStats> {
   });
 
   public Rigid getRigid() {
-    return null;
+    return new Circle(getPosition(), this.getStatus().getInitStats().getSize());
   }
 
   @Override
   public void render(Graphics g) {
     g.drawImage(this.sprites[this.isBoosting][this.direction].getScaledInstance(
-        40, 70, Image.SCALE_DEFAULT), this.position.getX(), this.position.getY(), null);
+        40, 70, Image.SCALE_DEFAULT), (int) this.getPosition().getX(), (int) this.getPosition().getY(), null);
   }
 
   @Override
   public void useWeapon() {
-    Bullet bullet = this.weapon.fire(DeepCopyUtils.copy(this.position));
+    Bullet bullet = this.getWeapon().fire(DeepCopyUtils.copy(this.getPosition()));
     if (bullet != null)
-      this.world.addEntity(bullet);
+      this.getWorld().addEntity(bullet);
   }
 
   @Override
@@ -49,17 +54,20 @@ public class Ship extends MortalEntity<ShipStats> {
 
   @Override
   public void onCollisionStay(Entity<?> other, Response response) {
-    throw new UnsupportedOperationException("Unimplemented method 'onCollisionStay'");
+    // throw new UnsupportedOperationException("Unimplemented method
+    // 'onCollisionStay'");
   }
 
   @Override
   public void onCollisionExit(Entity<?> other, Response response) {
-    throw new UnsupportedOperationException("Unimplemented method 'onCollisionExit'");
+    // throw new UnsupportedOperationException("Unimplemented method
+    // 'onCollisionExit'");
   }
 
   @Override
   public void onCollisionEnter(Entity<?> other, Response response) {
-    throw new UnsupportedOperationException("Unimplemented method 'onCollisionEnter'");
+    // throw new UnsupportedOperationException("Unimplemented method
+    // 'onCollisionEnter'");
   }
 
   public void startTimer() {
@@ -68,20 +76,20 @@ public class Ship extends MortalEntity<ShipStats> {
   }
 
   public void moveUp() {
-    if (this.position.getY() > 2) {
-      this.position.setY(this.position.getY() - this.speed);
+    if (this.getPosition().getY() > 2) {
+      this.getPosition().setY(this.getPosition().getY() - this.getCurrentStats().getSpeed());
     }
   }
 
   public void moveDown() {
-    if (this.position.getY() < 700) {
-      this.position.setY(this.position.getY() + this.speed);
+    if (this.getPosition().getY() < 700) {
+      this.getPosition().setY(this.getPosition().getY() + this.getCurrentStats().getSpeed());
     }
   }
 
   public void moveLeft() {
-    if (this.position.getX() > 0) {
-      this.position.setX(this.position.getX() - this.speed);
+    if (this.getPosition().getX() > 0) {
+      this.getPosition().setX(this.getPosition().getX() - this.getCurrentStats().getSpeed());
     }
     if (this.direction > 0) {
       this.direction -= 1;
@@ -89,8 +97,9 @@ public class Ship extends MortalEntity<ShipStats> {
   }
 
   public void moveRight() {
-    if (this.position.getX() < 800) {
-      this.position.setX(this.position.getX() + this.speed);
+    if (this.getPosition().getX() < 800) {
+      // System.out.println(this.status.getInitStats());
+      this.getPosition().setX(this.getPosition().getX() + this.getCurrentStats().getSpeed());
     }
     if (this.direction < 4) {
       this.direction += 1;

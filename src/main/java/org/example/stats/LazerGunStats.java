@@ -6,5 +6,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class LazerGunStats extends WeaponStats {
-  protected int critDame, critRate;
+  private int critDame = 2;
+  private int critRate = 10;
 }

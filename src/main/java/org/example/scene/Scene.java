@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public abstract class Scene extends JPanel implements Runnable {
-  protected App app;
+  private App app;
 
   public abstract void onShow();
 

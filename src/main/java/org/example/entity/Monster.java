@@ -21,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Monster extends MortalEntity<MonsterStats> {
-  protected Status<MonsterStats> status = new Status<MonsterStats>(new MonsterStats());
+  private Status<MonsterStats> status = new Status<>(new MonsterStats());
 
   private int speed;
   private int direction;
@@ -34,41 +34,49 @@ public class Monster extends MortalEntity<MonsterStats> {
       horRange = List.of(1, 2, 3, 4, 0, -1, -2, -3, -4, -0); // ngang
 
   public Rigid getRigid() {
-    return new Circle(this.position, this.status.getInitStats().getSize());
+    return new Circle(this.getPosition(), this.status.getInitStats().getSize());
   }
 
   @Override
   public void render(Graphics g) {
     g.drawImage(this.sprites[isBoosting][direction].getScaledInstance(
-        30, 55, Image.SCALE_AREA_AVERAGING), this.position.getX(), this.position.getY(), null);
+        30, 55, Image.SCALE_AREA_AVERAGING), (int) this.getPosition().getX(), (int) this.getPosition().getY(), null);
   }
 
   @Override
   public void useWeapon() {
-    Bullet bullet = this.weapon.fire(DeepCopyUtils.copy(this.position));
+    Bullet bullet = this.getWeapon().fire(DeepCopyUtils.copy(this.getPosition()));
     if (bullet != null)
-      this.world.addEntity(bullet);
+      this.getWorld().addEntity(bullet);
+  }
+
+  @Override
+  public void onAdd() {
+    this.startTimer();
   }
 
   @Override
   public void update(float deltaTime) {
-    this.position.setY(this.position.getY() + this.verRange.get(this.movePoint));
-    this.position.setX(this.position.getX() + this.horRange.get(this.movePoint));
+    this.getPosition().setY(this.getPosition().getY() + this.verRange.get(this.movePoint));
+    this.getPosition().setX(this.getPosition().getX() + this.horRange.get(this.movePoint));
   }
 
   @Override
   public void onCollisionStay(Entity<?> other, Response response) {
-    throw new UnsupportedOperationException("Unimplemented method 'onCollisionStay'");
+    // throw new UnsupportedOperationException("Unimplemented method
+    // 'onCollisionStay'");
   }
 
   @Override
   public void onCollisionExit(Entity<?> other, Response response) {
-    throw new UnsupportedOperationException("Unimplemented method 'onCollisionExit'");
+    // throw new UnsupportedOperationException("Unimplemented method
+    // 'onCollisionExit'");
   }
 
   @Override
   public void onCollisionEnter(Entity<?> other, Response response) {
-    throw new UnsupportedOperationException("Unimplemented method 'onCollisionEnter'");
+    // throw new UnsupportedOperationException("Unimplemented method
+    // 'onCollisionEnter'");
   }
 
   public void startTimer() {
@@ -81,20 +89,20 @@ public class Monster extends MortalEntity<MonsterStats> {
   }
 
   public void moveUp() {
-    if (this.position.getY() > 2) {
-      this.position.setY(this.position.getY() - this.speed);
+    if (this.getPosition().getY() > 2) {
+      this.getPosition().setY(this.getPosition().getY() - this.speed);
     }
   }
 
   public void moveDown() {
-    if (this.position.getY() < 600 - 50) {
-      this.position.setY(this.position.getY() + this.speed);
+    if (this.getPosition().getY() < 600 - 50) {
+      this.getPosition().setY(this.getPosition().getY() + this.speed);
     }
   }
 
   public void moveLeft() {
-    if (this.position.getX() > 0) {
-      this.position.setX(this.position.getX() - this.speed);
+    if (this.getPosition().getX() > 0) {
+      this.getPosition().setX(this.getPosition().getX() - this.speed);
     }
     if (this.direction > 0) {
       this.direction -= 1;
@@ -102,8 +110,8 @@ public class Monster extends MortalEntity<MonsterStats> {
   }
 
   public void moveRight() {
-    if (this.position.getX() < 600 - 126) {
-      this.position.setX(this.position.getX() + this.speed);
+    if (this.getPosition().getX() < 600 - 126) {
+      this.getPosition().setX(this.getPosition().getX() + this.speed);
     }
     if (this.direction < 4) {
       this.direction += 1;

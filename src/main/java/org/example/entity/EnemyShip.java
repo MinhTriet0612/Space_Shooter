@@ -17,8 +17,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EnemyShip extends MortalEntity<EnemyShipStats> {
-  protected Status<EnemyShipStats> status = new Status<EnemyShipStats>(new EnemyShipStats());
+public class EnemyShip extends Ship<EnemyShipStats> {
+  private Status<EnemyShipStats> status = new Status<>(new EnemyShipStats());
+
   private BufferedImage[][] sprites;
   private int isBoosting = 0;
   private int direction = 2;
@@ -29,18 +30,18 @@ public class EnemyShip extends MortalEntity<EnemyShipStats> {
   private boolean canFire = true;
 
   public Rigid getRigid() {
-    return new Circle(this.position, this.status.getInitStats().getSize() * 50);
+    return new Circle(this.getPosition(), this.status.getInitStats().getSize() * 50);
   }
 
   @Override
   public void render(Graphics g) {
     g.drawImage(this.sprites[this.isBoosting][this.direction].getScaledInstance(
-        50, 100, Image.SCALE_DEFAULT), this.position.getX(), this.position.getY(), null);
+        50, 100, Image.SCALE_DEFAULT), (int) this.getPosition().getX(), (int) this.getPosition().getY(), null);
   }
 
   @Override
   public void update(float deltaTime) {
-    this.position.setY(this.position.getY() + 1);
+    this.getPosition().setY(this.getPosition().getY() + 1);
   }
 
   @Override
@@ -49,12 +50,14 @@ public class EnemyShip extends MortalEntity<EnemyShipStats> {
 
   @Override
   public void onCollisionExit(Entity<?> other, Response response) {
-    throw new UnsupportedOperationException("Unimplemented method 'onCollisionExit'");
+    // throw new UnsupportedOperationException("Unimplemented method
+    // 'onCollisionExit'");
   }
 
   @Override
   public void onCollisionEnter(Entity<?> other, Response response) {
-    throw new UnsupportedOperationException("Unimplemented method 'onCollisionEnter'");
+    // throw new UnsupportedOperationException("Unimplemented method
+    // 'onCollisionEnter'");
   }
 
   public void moveUp() {
@@ -97,7 +100,7 @@ public class EnemyShip extends MortalEntity<EnemyShipStats> {
 
   @Override
   public void useWeapon() {
-    throw new UnsupportedOperationException("Not supported yet.");
+    // throw new UnsupportedOperationException("Not supported yet.");
   }
 
 }

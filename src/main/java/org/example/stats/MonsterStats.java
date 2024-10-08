@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MonsterStats extends MortalEntityStats {
-  protected int damage = this.health / 20;
-  protected int size = 20;
+  private int damage = 10;
+  private int size = 20;
 }

@@ -14,34 +14,37 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Meteorite extends Entity<MeteoriteStats> {
-  protected Status<MeteoriteStats> status = new Status<MeteoriteStats>(new MeteoriteStats());
+  private Status<MeteoriteStats> status = new Status<>(new MeteoriteStats());
 
   public Rigid getRigid() {
-    return new Circle(position, this.status.getInitStats().getRadius());
+    return new Circle(this.getPosition(), this.status.getInitStats().getRadius());
   }
 
   @Override
   public void render(Graphics g) {
-    throw new UnsupportedOperationException("Unimplemented method 'render'");
+    // throw new UnsupportedOperationException("Unimplemented method 'render'");
   }
 
   @Override
   public void update(float deltaTime) {
-    throw new UnsupportedOperationException("Unimplemented method 'update'");
+    // throw new UnsupportedOperationException("Unimplemented method 'update'");
   }
 
   @Override
   public void onCollisionStay(Entity<?> other, Response response) {
-    throw new UnsupportedOperationException("Unimplemented method 'onCollisionStay'");
+    // throw new UnsupportedOperationException("Unimplemented method
+    // 'onCollisionStay'");
   }
 
   @Override
   public void onCollisionExit(Entity<?> other, Response response) {
-    throw new UnsupportedOperationException("Unimplemented method 'onCollisionExit'");
+    // throw new UnsupportedOperationException("Unimplemented method
+    // 'onCollisionExit'");
   }
 
   @Override
   public void onCollisionEnter(Entity<?> other, Response response) {
-    throw new UnsupportedOperationException("Unimplemented method 'onCollisionEnter'");
+    // throw new UnsupportedOperationException("Unimplemented method
+    // 'onCollisionEnter'");
   }
 }

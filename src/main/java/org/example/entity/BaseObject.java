@@ -6,15 +6,12 @@ import java.util.UUID;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.Builder.Default;
-import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder
 public abstract class BaseObject implements Serializable {
-  protected UUID uuid = UUID.randomUUID();
-  protected Instant createdDate, updatedDate;
+  private UUID uuid = UUID.randomUUID();
+  private Instant createdDate, updatedDate;
   private static final long serialVersionUID = -863164858986274318L;
 
   public BaseObject() {

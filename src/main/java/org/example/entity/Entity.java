@@ -15,12 +15,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public abstract class Entity<S extends EntityStats> extends BaseObject {
-  protected World world;
-  protected Status<S> status;
-  protected Vector2D position = new Vector2D(0, 0);
-  protected boolean markAsRemoved = false;
-  protected boolean isCollidable = true;
-  protected boolean isVisible = true;
+  private World world;
+  private Status<S> status;
+  private Vector2D position = new Vector2D(0, 0);
+  private Vector2D velocity = new Vector2D(0, 0);
+  private boolean markAsRemoved = false;
+  private boolean isCollidable = true;
+  private boolean isVisible = true;
 
   public Entity() {
   }
@@ -29,13 +30,33 @@ public abstract class Entity<S extends EntityStats> extends BaseObject {
 
   public abstract void render(Graphics g);
 
-  public abstract void update(float deltaTime);
+  public void update(float deltaTime) {
+    this.position.add(this.velocity);
+    this.velocity.scale(this.status.getCurrentStats().getFriction());
+  }
 
-  public abstract void onCollisionStay(Entity<?> entity2, Response response);
+  public void onAdd() {
+  }
 
-  public abstract void onCollisionExit(Entity<?> other, Response response);
+  public void onRemove() {
+  }
 
-  public abstract void onCollisionEnter(Entity<?> other, Response response);
+  public void onCollisionStay(Entity<?> entity2, Response response) {
+  }
+
+  public void onCollisionExit(Entity<?> other, Response response) {
+  }
+
+  public void onCollisionEnter(Entity<?> other, Response response) {
+  }
+
+  public S getCurrentStats() {
+    return this.getStatus().getCurrentStats();
+  }
+
+  public S getInitStats() {
+    return this.getStatus().getInitStats();
+  }
 
   public void destroy() {
     this.markAsRemoved = true;
@@ -44,5 +65,9 @@ public abstract class Entity<S extends EntityStats> extends BaseObject {
   public void setPosition(int x, int y) {
     this.position.setX(x);
     this.position.setY(y);
+  }
+
+  public void applyForce(Vector2D force) {
+    this.velocity.add(force);
   }
 }

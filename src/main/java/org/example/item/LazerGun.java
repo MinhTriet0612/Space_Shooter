@@ -13,7 +13,7 @@ import javax.swing.Timer;
 @Getter
 @Setter
 public class LazerGun extends Weapon<LazerGunStats> {
-  protected Status<LazerGunStats> status = new Status<>(new LazerGunStats());
+  private Status<LazerGunStats> status = new Status<LazerGunStats>(new LazerGunStats());
 
   private final Timer reloadAmmunition = new Timer(4000, e -> this.reloadAmmunition());
   private final Timer reloadForNextBullet = new Timer(150, e -> this.reloadForNextBullet());
@@ -21,11 +21,11 @@ public class LazerGun extends Weapon<LazerGunStats> {
   @Override
   public Bullet fire(Vector2D position) {
     if (this.status.getCurrentStats().getAmmunition() <= 0) {
-      this.isReload = true;
+      this.setReload(true);
       this.reloadAmmunition.start();
       this.status.getCurrentStats().setAmmunition(this.status.getInitStats().getAmmunition());
-    } else if (this.isFiring && !isReload) {
-      this.isFiring = false;
+    } else if (this.isFiring() && !this.isReload()) {
+      this.setFiring(false);
       this.status.getCurrentStats().setAmmunition(this.status.getCurrentStats().getAmmunition() - 1);
       this.reloadForNextBullet.stop();
       Bullet bullet = new Bullet();
@@ -39,11 +39,11 @@ public class LazerGun extends Weapon<LazerGunStats> {
   }
 
   public void reloadForNextBullet() {
-    this.isFiring = true;
+    this.setFiring(true);
   }
 
   public void reloadAmmunition() {
-    this.isReload = false;
+    this.setReload(false);
   }
 
   @Override

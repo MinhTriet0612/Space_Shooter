@@ -6,6 +6,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public abstract class WeaponStats extends ItemStats {
-  protected int power, mass, ammunition;
-  protected boolean isReload;
+  private int power = 10;
+  private int mass = 20;
+  private int ammunition = 30;
 }
