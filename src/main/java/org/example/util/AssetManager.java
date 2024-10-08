@@ -75,7 +75,7 @@ public class AssetManager {
 
     try {
       BufferedImage image = ImageIO
-          .read(AssetManager.class.getResource(paths.get((int) Math.round(Math.random() * 1))));
+          .read(AssetManager.class.getResource(paths.get((int) Math.round(Math.random() * 0))));
       for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {
           lazers[i][j] = image.getSubimage(j * width, i * height, width, height);
