@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.Timer;
 
+import org.example.rigid.Circle;
 import org.example.rigid.Rigid;
 import org.example.stats.BulletStats;
 import org.example.util.AssetManager;
@@ -13,18 +14,21 @@ import org.example.util.Response;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder
 public class Bullet extends Entity<BulletStats> {
   private int direct;
   private final BufferedImage[][] bullets = AssetManager.getLazerBoltAssets();
   private final Timer bulletAnimationTimer = new Timer(150, e -> this.direct = this.direct != 0 ? 0 : 1);
 
+  public Bullet() {
+    super();
+    this.bulletAnimationTimer.start();
+  }
+
   public Rigid getRigid() {
-    return null;
+    return new Circle(this.position, this.status.getInitStats().getRadius());
   }
 
   @Override
@@ -43,20 +47,17 @@ public class Bullet extends Entity<BulletStats> {
   }
 
   @Override
-  public void onCollisionStay(Entity other, Response response) {
-    // TODO Auto-generated method stub
+  public void onCollisionStay(Entity<?> other, Response response) {
     throw new UnsupportedOperationException("Unimplemented method 'onCollisionStay'");
   }
 
   @Override
-  public void onCollisionExit(Entity other, Response response) {
-    // TODO Auto-generated method stub
+  public void onCollisionExit(Entity<?> other, Response response) {
     throw new UnsupportedOperationException("Unimplemented method 'onCollisionExit'");
   }
 
   @Override
-  public void onCollisionEnter(Entity other, Response response) {
-    // TODO Auto-generated method stub
+  public void onCollisionEnter(Entity<?> other, Response response) {
     throw new UnsupportedOperationException("Unimplemented method 'onCollisionEnter'");
   }
 }

@@ -6,14 +6,19 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.Timer;
 
+import org.example.rigid.Circle;
 import org.example.rigid.Rigid;
 import org.example.stats.EnemyShipStats;
+import org.example.system.status.Status;
 import org.example.util.Response;
-import lombok.experimental.SuperBuilder;
 
-// Not use
-@SuperBuilder
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class EnemyShip extends MortalEntity<EnemyShipStats> {
+  protected Status<EnemyShipStats> status = new Status<EnemyShipStats>(new EnemyShipStats());
   private BufferedImage[][] sprites;
   private int isBoosting = 0;
   private int direction = 2;
@@ -24,7 +29,7 @@ public class EnemyShip extends MortalEntity<EnemyShipStats> {
   private boolean canFire = true;
 
   public Rigid getRigid() {
-    return null;
+    return new Circle(this.position, this.status.getInitStats().getSize() * 50);
   }
 
   @Override
@@ -39,18 +44,16 @@ public class EnemyShip extends MortalEntity<EnemyShipStats> {
   }
 
   @Override
-  public void onCollisionStay(Entity other, Response response) {
+  public void onCollisionStay(Entity<?> other, Response response) {
   }
 
   @Override
-  public void onCollisionExit(Entity other, Response response) {
-    // TODO Auto-generated method stub
+  public void onCollisionExit(Entity<?> other, Response response) {
     throw new UnsupportedOperationException("Unimplemented method 'onCollisionExit'");
   }
 
   @Override
-  public void onCollisionEnter(Entity other, Response response) {
-    // TODO Auto-generated method stub
+  public void onCollisionEnter(Entity<?> other, Response response) {
     throw new UnsupportedOperationException("Unimplemented method 'onCollisionEnter'");
   }
 

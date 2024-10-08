@@ -7,11 +7,9 @@ import org.example.world.World;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 @Setter
 @Getter
-@SuperBuilder
 public abstract class Item<T extends ItemStats> extends BaseObject {
   protected World world;
   protected Status<T> status;

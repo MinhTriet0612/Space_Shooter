@@ -11,18 +11,19 @@ import org.example.world.World;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder
 public abstract class Entity<S extends EntityStats> extends BaseObject {
   protected World world;
   protected Status<S> status;
-  protected Vector2D position;
+  protected Vector2D position = new Vector2D(0, 0);
   protected boolean markAsRemoved = false;
   protected boolean isCollidable = true;
   protected boolean isVisible = true;
+
+  public Entity() {
+  }
 
   public abstract Rigid getRigid();
 
@@ -40,4 +41,8 @@ public abstract class Entity<S extends EntityStats> extends BaseObject {
     this.markAsRemoved = true;
   }
 
+  public void setPosition(int x, int y) {
+    this.position.setX(x);
+    this.position.setY(y);
+  }
 }

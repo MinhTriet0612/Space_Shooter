@@ -1,7 +1,9 @@
 package org.example.stats;
 
-import lombok.experimental.SuperBuilder;
+import lombok.Getter;
+import lombok.Setter;
 
-@SuperBuilder
+@Getter
+@Setter
 public class EnemyShipStats extends ShipStats {
 }

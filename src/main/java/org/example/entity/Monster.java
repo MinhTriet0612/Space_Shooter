@@ -10,14 +10,19 @@ import javax.swing.Timer;
 import org.example.rigid.Circle;
 import org.example.rigid.Rigid;
 import org.example.stats.MonsterStats;
+import org.example.system.status.Status;
 import org.example.util.AssetManager;
 import org.example.util.DeepCopyUtils;
 import org.example.util.Response;
 
-import lombok.experimental.SuperBuilder;
+import lombok.Getter;
+import lombok.Setter;
 
-@SuperBuilder
+@Getter
+@Setter
 public class Monster extends MortalEntity<MonsterStats> {
+  protected Status<MonsterStats> status = new Status<MonsterStats>(new MonsterStats());
+
   private int speed;
   private int direction;
   private int isBoosting;
@@ -29,7 +34,7 @@ public class Monster extends MortalEntity<MonsterStats> {
       horRange = List.of(1, 2, 3, 4, 0, -1, -2, -3, -4, -0); // ngang
 
   public Rigid getRigid() {
-    return null;
+    return new Circle(this.position, this.status.getInitStats().getSize());
   }
 
   @Override
@@ -52,20 +57,17 @@ public class Monster extends MortalEntity<MonsterStats> {
   }
 
   @Override
-  public void onCollisionStay(Entity other, Response response) {
-    // TODO Auto-generated method stub
+  public void onCollisionStay(Entity<?> other, Response response) {
     throw new UnsupportedOperationException("Unimplemented method 'onCollisionStay'");
   }
 
   @Override
-  public void onCollisionExit(Entity other, Response response) {
-    // TODO Auto-generated method stub
+  public void onCollisionExit(Entity<?> other, Response response) {
     throw new UnsupportedOperationException("Unimplemented method 'onCollisionExit'");
   }
 
   @Override
-  public void onCollisionEnter(Entity other, Response response) {
-    // TODO Auto-generated method stub
+  public void onCollisionEnter(Entity<?> other, Response response) {
     throw new UnsupportedOperationException("Unimplemented method 'onCollisionEnter'");
   }
 

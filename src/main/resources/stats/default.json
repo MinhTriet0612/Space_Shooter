@@ -1,0 +1,17 @@
+{
+  "Entity": {},
+  "Bullet": {
+    "speed": 10,
+    "damage": 10,
+    "radius": 5
+  },
+  "Ship": {
+    "health": 100,
+    "speed": 10
+  },
+  "Meteorite": {},
+  "Weapon": {
+    "cooldown": 1000,
+    "damage": 10
+  }
+}

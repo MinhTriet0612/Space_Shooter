@@ -12,12 +12,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Status<T extends Stats> {
-  private T initStast;
-  private T currentStast;
+  private T initStats;
+  private T currentStats;
   private List<Effect> effects = new ArrayList<>();
 
   public Status(T stats) {
-    this.initStast = DeepCopyUtils.copy(stats);
-    this.currentStast = DeepCopyUtils.copy(stats);
+    this.initStats = DeepCopyUtils.copy(stats);
+    this.currentStats = DeepCopyUtils.copy(stats);
   }
 }

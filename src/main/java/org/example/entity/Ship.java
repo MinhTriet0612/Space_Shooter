@@ -8,15 +8,15 @@ import javax.swing.Timer;
 
 import org.example.rigid.Rigid;
 import org.example.stats.ShipStats;
-import org.example.system.status.Status;
 import org.example.util.AssetManager;
 import org.example.util.DeepCopyUtils;
 import org.example.util.Response;
-import org.example.util.Vector2D;
 
-import lombok.experimental.SuperBuilder;
+import lombok.Getter;
+import lombok.Setter;
 
-@SuperBuilder
+@Getter
+@Setter
 public class Ship extends MortalEntity<ShipStats> {
   private int speed;
   private int direction;
@@ -48,20 +48,17 @@ public class Ship extends MortalEntity<ShipStats> {
   }
 
   @Override
-  public void onCollisionStay(Entity other, Response response) {
-    // TODO Auto-generated method stub
+  public void onCollisionStay(Entity<?> other, Response response) {
     throw new UnsupportedOperationException("Unimplemented method 'onCollisionStay'");
   }
 
   @Override
-  public void onCollisionExit(Entity other, Response response) {
-    // TODO Auto-generated method stub
+  public void onCollisionExit(Entity<?> other, Response response) {
     throw new UnsupportedOperationException("Unimplemented method 'onCollisionExit'");
   }
 
   @Override
-  public void onCollisionEnter(Entity other, Response response) {
-    // TODO Auto-generated method stub
+  public void onCollisionEnter(Entity<?> other, Response response) {
     throw new UnsupportedOperationException("Unimplemented method 'onCollisionEnter'");
   }
 

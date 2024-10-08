@@ -6,12 +6,10 @@ import org.example.util.Vector2D;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 @Setter
 @Getter
-@SuperBuilder
-public abstract class Weapon<T extends WeaponStats> extends Item<WeaponStats> {
+public abstract class Weapon<S extends WeaponStats> extends Item<S> {
   protected boolean isFiring, isReload;
 
   public abstract boolean setAuto();
