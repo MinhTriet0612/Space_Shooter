@@ -3,22 +3,32 @@ package org.example.system.collision;
 import org.example.entity.Entity;
 import org.example.rigid.Circle;
 import org.example.rigid.Rectangle;
+import org.example.rigid.Rigid;
 import org.example.system.GameSystem;
 import org.example.util.Response;
 import org.example.util.Vector2D;
 import java.util.HashMap;
 
 public class CollisionSystem extends GameSystem {
-  private HashMap<String, Response> collisionMap = new HashMap<>();
+  private HashMap<String, Response> oldCollisionMap = new HashMap<>();
+  private HashMap<String, Response> newCollisionMap = new HashMap<>();
 
   @Override
   public void update(float deltaTime) {
-    for (int i = 0; i < this.world.getEntities().size(); i++) {
-      for (int j = i + 1; j < this.world.getEntities().size(); j++) {
-        Entity<?> entity1 = this.world.getEntities().get(i);
-        Entity<?> entity2 = this.world.getEntities().get(j);
+    this.newCollisionMap.clear();
+    for (int i = 0; i < this.getWorld().getEntities().size(); i++) {
+      for (int j = i + 1; j < this.getWorld().getEntities().size(); j++) {
+        Entity<?> entity1 = this.getWorld().getEntities().get(i);
+        Entity<?> entity2 = this.getWorld().getEntities().get(j);
 
         if (entity1.isCollidable() && entity2.isCollidable()) {
+          Rigid r1 = entity1.getRigid();
+          Rigid r2 = entity2.getRigid();
+
+          if (r1 == null || r2 == null) {
+            continue;
+          }
+
           Class<?> type1 = entity1.getRigid().getClass();
           Class<?> type2 = entity2.getRigid().getClass();
 
@@ -31,6 +41,15 @@ public class CollisionSystem extends GameSystem {
             this.handleCircleRectangle(entity1, entity2);
           }
         }
+      }
+    }
+
+    for (String key : this.oldCollisionMap.keySet()) {
+      if (!this.newCollisionMap.containsKey(key)) {
+        Entity<?> entity1 = this.oldCollisionMap.get(key).getA();
+        Entity<?> entity2 = this.oldCollisionMap.get(key).getB();
+        entity1.onCollisionExit(entity2, this.oldCollisionMap.get(key));
+        this.oldCollisionMap.remove(key);
       }
     }
   }
@@ -57,13 +76,13 @@ public class CollisionSystem extends GameSystem {
       // Collision detected
 
       String key = this.getCollisionKey(entity1, entity2);
-      if (this.collisionMap.containsKey(key)) {
+      if (this.oldCollisionMap.containsKey(key)) {
         entity1.onCollisionStay(entity2, response);
       } else {
         entity1.onCollisionEnter(entity2, response);
       }
 
-      this.collisionMap.put(key, response);
+      this.newCollisionMap.put(key, response);
     }
   }
 
@@ -92,13 +111,13 @@ public class CollisionSystem extends GameSystem {
       // Collision detected
 
       String key = this.getCollisionKey(entity1, entity2);
-      if (this.collisionMap.containsKey(key)) {
+      if (this.oldCollisionMap.containsKey(key)) {
         entity1.onCollisionStay(entity2, response);
       } else {
         entity1.onCollisionEnter(entity2, response);
       }
 
-      this.collisionMap.put(key, response);
+      this.newCollisionMap.put(key, response);
     }
   }
 
@@ -140,13 +159,13 @@ public class CollisionSystem extends GameSystem {
       // Collision detected
 
       String key = this.getCollisionKey(entity1, entity2);
-      if (this.collisionMap.containsKey(key)) {
+      if (this.oldCollisionMap.containsKey(key)) {
         entity1.onCollisionStay(entity2, response);
       } else {
         entity1.onCollisionEnter(entity2, response);
       }
 
-      this.collisionMap.put(key, response);
+      this.newCollisionMap.put(key, response);
     }
   }
 }

@@ -35,7 +35,7 @@ public class CasualPlayScene extends Scene {
     this.world = new CasualWorld();
 
     // Add ship entity and controller system to world
-    Ship playerShip = new Ship();
+    Ship<?> playerShip = new Ship<>();
     playerShip.setWeapon(new LazerGun());
     ShipController shipController = new ShipController(playerShip, controllerInput);
     this.world.addSystem(shipController);

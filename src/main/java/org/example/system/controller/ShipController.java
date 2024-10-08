@@ -10,10 +10,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ShipController extends ControllerSystem {
-  private Ship ship;
+  private Ship<?> ship;
   private ControllerInput controllerInput;
 
-  public ShipController(Ship ship, ControllerInput controllerInput) {
+  public ShipController(Ship<?> ship, ControllerInput controllerInput) {
     this.ship = ship;
     this.controllerInput = controllerInput;
   }

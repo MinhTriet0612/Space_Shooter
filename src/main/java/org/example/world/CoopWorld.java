@@ -8,7 +8,7 @@ public class CoopWorld extends World {
   @Override
   public void update(float deltaTime) {
     // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'update'");
+    // throw new UnsupportedOperationException("Unimplemented method 'update'");
   }
 
   @Override

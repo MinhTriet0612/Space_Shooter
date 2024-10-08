@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 public class Vector2D extends BaseObject {
-  private int x, y;
+  private float x, y;
 
   public double angle() {
     return Math.atan2(y, x);
@@ -29,8 +29,12 @@ public class Vector2D extends BaseObject {
     return new Vector2D((int) (x / mag), (int) (y / mag));
   }
 
-  public Vector2D scale(int factor) {
+  public Vector2D scale(float factor) {
     return new Vector2D(x * factor, y * factor);
+  }
+
+  public Vector2D multiply(Vector2D other) {
+    return new Vector2D(x * other.x, y * other.y);
   }
 
   public double distance(Vector2D other) {

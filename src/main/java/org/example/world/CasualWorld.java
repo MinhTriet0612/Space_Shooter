@@ -2,6 +2,7 @@ package org.example.world;
 
 import java.awt.Graphics;
 
+import org.example.system.collision.CollisionSystem;
 import org.example.system.controller.MonsterSpawner;
 
 import lombok.Getter;
@@ -14,12 +15,13 @@ public class CasualWorld extends World {
     super();
 
     this.addSystem(new MonsterSpawner());
+    // this.addSystem(new CollisionSystem());
   }
 
   @Override
   public void render(Graphics g) {
-    for (int i = 0; i < this.entities.size(); i++) {
-      this.entities.get(i).render(g);
+    for (int i = 0; i < this.getEntities().size(); i++) {
+      this.getEntities().get(i).render(g);
     }
   }
 }
