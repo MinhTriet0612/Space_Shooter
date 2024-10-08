@@ -12,13 +12,12 @@ import lombok.Setter;
 @Setter
 @Getter
 public abstract class World {
-  protected ArrayList<GameSystem> systems = new ArrayList<>();
-  protected ArrayList<Entity<?>> entities = new ArrayList<>();
+  private ArrayList<GameSystem> systems = new ArrayList<>();
+  private ArrayList<Entity<?>> entities = new ArrayList<>();
 
   public abstract void render(Graphics g);
 
   public void update(float deltaTime) {
-
     for (int i = 0; i < this.systems.size(); i++) {
       this.systems.get(i).update(deltaTime);
     }
@@ -31,6 +30,7 @@ public abstract class World {
   public void addEntity(Entity<?> entity) {
     this.entities.add(entity);
     entity.setWorld(this);
+    entity.onAdd();
   }
 
   public void addSystem(GameSystem system) {
