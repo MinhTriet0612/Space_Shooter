@@ -4,18 +4,19 @@ import org.example.entity.Ship;
 import org.example.input.ControllerInput;
 import java.awt.event.KeyEvent;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class ShipController extends ControllerSystem {
   private Ship ship;
   private ControllerInput controllerInput;
+
+  public ShipController(Ship ship, ControllerInput controllerInput) {
+    this.ship = ship;
+    this.controllerInput = controllerInput;
+  }
 
   @Override
   public void update(float d) {

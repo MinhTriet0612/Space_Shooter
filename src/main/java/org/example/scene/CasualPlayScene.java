@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import org.example.constant.ScreenAttributeConstant;
 import org.example.entity.Ship;
 import org.example.input.ControllerInput;
+import org.example.item.LazerGun;
 import org.example.system.controller.ShipController;
 import org.example.world.CasualWorld;
 
@@ -35,6 +36,7 @@ public class CasualPlayScene extends Scene {
 
     // Add ship entity and controller system to world
     Ship playerShip = new Ship();
+    playerShip.setWeapon(new LazerGun());
     ShipController shipController = new ShipController(playerShip, controllerInput);
     this.world.addSystem(shipController);
     this.world.addEntity(playerShip);
