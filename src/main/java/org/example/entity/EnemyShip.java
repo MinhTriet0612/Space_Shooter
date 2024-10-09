@@ -11,6 +11,7 @@ import org.example.rigid.Circle;
 import org.example.rigid.Rigid;
 import org.example.stats.EnemyShipStats;
 import org.example.system.status.Status;
+import org.example.util.GraphicsUtil;
 import org.example.util.Response;
 import org.example.util.Vector2D;
 import org.example.world.World;
@@ -21,12 +22,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EnemyShip extends Ship<EnemyShipStats> {
-
-  public EnemyShip(World world, Vector2D position, Vector2D velocity, boolean markAsRemoved, boolean isCollidable,
-      boolean isVisible, Weapon<?> weapon, Status<EnemyShipStats> status, int direction, int isBoosting) {
-    super(world, position, velocity, markAsRemoved, isCollidable, isVisible, weapon, status, direction, isBoosting);
-  }
-
   private Status<EnemyShipStats> status = new Status<>(new EnemyShipStats());
 
   private BufferedImage[][] sprites;
@@ -38,14 +33,20 @@ public class EnemyShip extends Ship<EnemyShipStats> {
   private int fireRate = 150;
   private boolean canFire = true;
 
+  public EnemyShip() {
+    super();
+  }
+
   public Rigid getRigid() {
-    return new Circle(this.getPosition(), this.status.getInitStats().getSize() * 50);
+    return new Circle(this.getPosition(), this.getStatus().getInitStats().getSize());
   }
 
   @Override
   public void render(Graphics g) {
-    g.drawImage(this.sprites[this.isBoosting][this.direction].getScaledInstance(
-        50, 100, Image.SCALE_DEFAULT), (int) this.getPosition().getX(), (int) this.getPosition().getY(), null);
+    super.render(g);
+    GraphicsUtil.drawImage(g, this.sprites[this.isBoosting][this.direction].getScaledInstance(
+        50, 100, Image.SCALE_DEFAULT), (int) this.getPosition().getX(), (int) this.getPosition().getY(), 50, 100,
+        GraphicsUtil.DrawMode.CENTER);
   }
 
   @Override
@@ -111,77 +112,4 @@ public class EnemyShip extends Ship<EnemyShipStats> {
   public void useWeapon() {
     // throw new UnsupportedOperationException("Not supported yet.");
   }
-
-  public static EnemyShip.EnemyShipBuilder builder() {
-    return new EnemyShip.EnemyShipBuilder();
-  }
-
-  public static class EnemyShipBuilder extends Ship.ShipBuilder<EnemyShipStats> {
-    private World world;
-    private Vector2D position;
-    private Vector2D velocity;
-    private boolean markAsRemoved;
-    private boolean isCollidable;
-    private boolean isVisible;
-    private Weapon<?> weapon;
-    private int direction;
-    private int isBoosting;
-    private Status<EnemyShipStats> status;
-
-    public EnemyShipBuilder world(World world) {
-      this.world = world;
-      return this;
-    }
-
-    public EnemyShipBuilder position(Vector2D position) {
-      this.position = position;
-      return this;
-    }
-
-    public EnemyShipBuilder velocity(Vector2D velocity) {
-      this.velocity = velocity;
-      return this;
-    }
-
-    public EnemyShipBuilder markAsRemoved(boolean markAsRemoved) {
-      this.markAsRemoved = markAsRemoved;
-      return this;
-    }
-
-    public EnemyShipBuilder isCollidable(boolean isCollidable) {
-      this.isCollidable = isCollidable;
-      return this;
-    }
-
-    public EnemyShipBuilder isVisible(boolean isVisible) {
-      this.isVisible = isVisible;
-      return this;
-    }
-
-    public EnemyShipBuilder weapon(Weapon<?> weapon) {
-      this.weapon = weapon;
-      return this;
-    }
-
-    public EnemyShipBuilder status(Status<?> status) {
-      this.status = (Status<EnemyShipStats>) status;
-      return this;
-    }
-
-    public EnemyShipBuilder direction(int direction) {
-      this.direction = direction;
-      return this;
-    }
-
-    public EnemyShipBuilder isBoosting(int isBoosting) {
-      this.isBoosting = isBoosting;
-      return this;
-    }
-
-    public EnemyShip build() {
-      return new EnemyShip(world, position, velocity, markAsRemoved, isCollidable, isVisible, weapon, status, direction,
-          isBoosting);
-    }
-  }
-
 }

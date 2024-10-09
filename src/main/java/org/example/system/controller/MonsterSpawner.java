@@ -1,7 +1,6 @@
 package org.example.system.controller;
 
 import org.example.constant.ScreenAttributeConstant;
-import org.example.convenient.Test;
 import org.example.entity.Monster;
 import org.example.item.LazerGun;
 
@@ -16,7 +15,8 @@ public class MonsterSpawner extends ControllerSystem {
     for (int i = 0; i < ScreenAttributeConstant.CASUALPLAYSCENE_WIDTH; i += ScreenAttributeConstant.CASUALPLAYSCENE_WIDTH
         / 6) {
       int y = (int) Math.round(Math.random() * i);
-      Monster monster = Test.genMonster();
+      Monster monster = new Monster();
+      monster.setWeapon(new LazerGun());
       monster.setPosition(i, -1 * y - 10);
       // MonsterObserver monsterObserver = new MonsterObserver(monster);
       this.getWorld().addEntity(monster);

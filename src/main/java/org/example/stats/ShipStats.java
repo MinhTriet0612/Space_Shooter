@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ShipStats extends MortalEntityStats {
-  private int size = 1;
+  private int size = 20;
 }

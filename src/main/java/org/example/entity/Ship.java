@@ -3,20 +3,16 @@ package org.example.entity;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-
 import javax.swing.Timer;
-
-import org.example.item.Weapon;
 import org.example.rigid.Circle;
-import org.example.rigid.Rectangle;
 import org.example.rigid.Rigid;
 import org.example.stats.ShipStats;
 import org.example.system.status.Status;
 import org.example.util.AssetManager;
 import org.example.util.DeepCopyUtils;
+import org.example.util.GraphicsUtil;
 import org.example.util.Response;
-import org.example.util.Vector2D;
-import org.example.world.World;
+import org.example.util.GraphicsUtil.DrawMode;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -33,13 +29,8 @@ public class Ship<S extends ShipStats> extends MortalEntity<S> {
     this.updateShipBoost();
   });
 
-  protected Ship(World world, Vector2D position, Vector2D velocity, boolean markAsRemoved, boolean isCollidable,
-      boolean isVisible, Weapon<?> weapon, Status<S> status, int direction, int isBoosting) {
-    super(world, position, velocity, markAsRemoved, isCollidable, isVisible, weapon);
-    this.status = status;
-    this.direction = direction;
-    this.isBoosting = isBoosting;applyForce(velocity);
-    this.boostTimer.start();
+  public Ship() {
+    super();
   }
 
   public Rigid getRigid() {
@@ -48,19 +39,24 @@ public class Ship<S extends ShipStats> extends MortalEntity<S> {
 
   @Override
   public void render(Graphics g) {
-    g.drawImage(this.sprites[this.isBoosting][this.direction].getScaledInstance(
-        40, 70, Image.SCALE_DEFAULT), (int) this.getPosition().getX(), (int) this.getPosition().getY(), null);
+    super.render(g);
+    GraphicsUtil.drawImage(g, this.sprites[this.isBoosting][this.direction].getScaledInstance(
+        40, 70, Image.SCALE_DEFAULT), (int) this.getPosition().getX(), (int) this.getPosition().getY(), 40, 70,
+        DrawMode.CENTER);
   }
 
   @Override
   public void useWeapon() {
-    Bullet bullet = this.getWeapon().fire(DeepCopyUtils.copy(this.getPosition()));
-    if (bullet != null)
-      this.getWorld().addEntity(bullet);
+    this.getWeapon().fire(this.getPosition());
   }
 
   @Override
   public void update(float deltaTime) {
+  }
+
+  @Override
+  public void onAdd() {
+    this.setDebugRigid(true);
   }
 
   @Override
@@ -77,6 +73,10 @@ public class Ship<S extends ShipStats> extends MortalEntity<S> {
 
   @Override
   public void onCollisionEnter(Entity<?> other, Response response) {
+    if (other instanceof Bullet) {
+      other.setMarkAsRemoved(true);
+      this.getStatus().getCurrentStats().setHealth(this.getStatus().getCurrentStats().getHealth() - 5);
+    }
     // throw new UnsupportedOperationException("Unimplemented method
     // 'onCollisionEnter'");
   }
@@ -122,77 +122,5 @@ public class Ship<S extends ShipStats> extends MortalEntity<S> {
 
   public void updateShipBoost() {
     this.isBoosting = (this.isBoosting == 0) ? 1 : 0;
-  }
-
-  public static Ship.ShipBuilder<?> builder() {
-    return new Ship.ShipBuilder<>();
-  }
-
-  public static class ShipBuilder<S extends ShipStats> {
-    private World world;
-    private Vector2D position;
-    private Vector2D velocity;
-    private boolean markAsRemoved;
-    private boolean isCollidable;
-    private boolean isVisible;
-    private Weapon<?> weapon;
-    private Status<S> status;
-    private int direction;
-    private int isBoosting;
-
-    public ShipBuilder<S> world(World world) {
-      this.world = world;
-      return this;
-    }
-
-    public ShipBuilder<S> position(Vector2D position) {
-      this.position = position;
-      return this;
-    }
-
-    public ShipBuilder<S> velocity(Vector2D velocity) {
-      this.velocity = velocity;
-      return this;
-    }
-
-    public ShipBuilder<S> markAsRemoved(boolean markAsRemoved) {
-      this.markAsRemoved = markAsRemoved;
-      return this;
-    }
-
-    public ShipBuilder<S> isCollidable(boolean isCollidable) {
-      this.isCollidable = isCollidable;
-      return this;
-    }
-
-    public ShipBuilder<S> isVisible(boolean isVisible) {
-      this.isVisible = isVisible;
-      return this;
-    }
-
-    public ShipBuilder<S> weapon(Weapon<?> weapon) {
-      this.weapon = weapon;
-      return this;
-    }
-
-    public ShipBuilder<S> status(Status<?> status) {
-      this.status = (Status<S>) status;
-      return this;
-    }
-
-    public ShipBuilder<S> direction(int direction) {
-      this.direction = direction;
-      return this;
-    }
-
-    public ShipBuilder<S> isBoosting(int isBoosting) {
-      this.isBoosting = isBoosting;
-      return this;
-    }
-
-    public Ship<S> build() {
-      return new Ship<>(world, position, velocity, markAsRemoved, isCollidable, isVisible, weapon, status, direction,
-          isBoosting);
-    }
   }
 }

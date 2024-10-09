@@ -8,5 +8,5 @@ import lombok.Setter;
 public class BulletStats extends EntityStats {
   private int speed = 10;
   private int damage = 1;
-  private int radius = 20;
+  private int radius = 8;
 }

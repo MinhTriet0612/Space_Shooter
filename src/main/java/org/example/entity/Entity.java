@@ -1,12 +1,16 @@
 package org.example.entity;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
+import org.example.rigid.Circle;
 import org.example.rigid.Rigid;
 import org.example.stats.EntityStats;
 import org.example.system.status.Status;
+import org.example.util.GraphicsUtil;
 import org.example.util.Response;
 import org.example.util.Vector2D;
+import org.example.util.GraphicsUtil.DrawMode;
 import org.example.world.World;
 
 import lombok.Getter;
@@ -22,28 +26,29 @@ public abstract class Entity<S extends EntityStats> extends BaseObject {
   private boolean markAsRemoved = false;
   private boolean isCollidable = true;
   private boolean isVisible = true;
-
-  protected Entity(World world,Vector2D position, Vector2D velocity, boolean markAsRemoved,
-      boolean isCollidable, boolean isVisible) {
-        super();
-        this.world = world;
-        this.position = position;
-        this.velocity = velocity;
-        this.markAsRemoved = markAsRemoved;
-        this.isCollidable = isCollidable;
-        this.isVisible = isVisible;
-  }
+  private boolean debugRigid = true;
 
   public Entity() {
   }
 
   public abstract Rigid getRigid();
 
-  public abstract void render(Graphics g);
+  public void render(Graphics g) {
+  }
+
+  public void afterRender(Graphics g) {
+    if (this.debugRigid) {
+      Circle circle = (Circle) this.getRigid();
+      int x = (int) circle.getPosition().getX();
+      int y = (int) circle.getPosition().getY();
+      int radius = circle.getRadius();
+      GraphicsUtil.drawEllipse(g, x, y, radius * 2, radius * 2, Color.WHITE, DrawMode.CENTER);
+    }
+  }
 
   public void update(float deltaTime) {
     this.position.add(this.velocity);
-    this.velocity.scale(this.status.getCurrentStats().getFriction());
+    this.velocity.scale(this.getStatus().getCurrentStats().getFriction());
   }
 
   public void onAdd() {

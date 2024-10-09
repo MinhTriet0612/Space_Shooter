@@ -42,8 +42,9 @@ public class App extends JFrame {
       this.currentScene.onDispose();
       this.currentScene = scene;
       start();
+    } else {
+      throw new InvalidDataException("Current scene in app invalid value");
     }
-    throw new InvalidDataException("Current scene in app invalid value");
   }
 
   public void addScene(Scene scene) {

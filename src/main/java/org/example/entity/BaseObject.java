@@ -11,12 +11,9 @@ import lombok.Setter;
 @Setter
 public abstract class BaseObject implements Serializable {
   private UUID uuid = UUID.randomUUID();
-  private Instant createdDate, updatedDate;
+  private Instant createdDate = Instant.now(), updatedDate = Instant.now();
   private static final long serialVersionUID = -863164858986274318L;
 
   protected BaseObject() {
-    this.uuid = UUID.randomUUID();
-    this.updatedDate = Instant.now();
-    this.createdDate = Instant.now();
   }
 }

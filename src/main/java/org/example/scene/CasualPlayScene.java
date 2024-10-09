@@ -2,16 +2,13 @@ package org.example.scene;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-
 import org.example.constant.ScreenAttributeConstant;
-import org.example.convenient.Test;
 import org.example.entity.Ship;
+import org.example.graphic.Healthbar;
 import org.example.input.ControllerInput;
 import org.example.item.LazerGun;
-import org.example.stats.EnemyShipStats;
-import org.example.stats.ShipStats;
 import org.example.system.controller.ShipController;
-import org.example.system.status.Status;
+import org.example.util.Vector2D;
 import org.example.world.CasualWorld;
 
 import lombok.Getter;
@@ -20,15 +17,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CasualPlayScene extends Scene {
-  private Boolean isRunning;
-  private CasualWorld world;
-  private final Thread gameThread;
+  private CasualWorld world = new CasualWorld();
   private final CasualPlaySceneBackground casualPlaySceneBackground;
   private final ControllerInput controllerInput = new ControllerInput();
+  private final Healthbar healthbar = new Healthbar();
+  private final Ship<?> ship;
 
   public CasualPlayScene() {
-    this.isRunning = true;
-    this.gameThread = new Thread(this);
     this.setPreferredSize(
         new Dimension(
             ScreenAttributeConstant.CASUALPLAYSCENE_WIDTH,
@@ -36,13 +31,18 @@ public class CasualPlayScene extends Scene {
     this.casualPlaySceneBackground = new CasualPlaySceneBackground();
     this.setFocusable(true);
 
-    this.world = new CasualWorld();
-
     // Add ship entity and controller system to world
-    Ship ship = Test.genShip();
+    LazerGun lazerGun = this.world.addItem(new LazerGun());
+    this.ship = new Ship<>();
+    this.ship.setPosition(new Vector2D(384, 514));
+    this.ship.setIsBoosting(0);
+    this.ship.setWeapon(lazerGun);
+
     ShipController shipController = new ShipController(ship, controllerInput);
     this.world.addSystem(shipController);
     this.world.addEntity(ship);
+
+    this.getSGraphics().add(this.healthbar);
 
     // Register controller input to this scene
     this.addKeyListener(controllerInput);
@@ -50,38 +50,30 @@ public class CasualPlayScene extends Scene {
 
   @Override
   public void onShow() {
-    this.gameThread.start();
-  }
-
-  @Override
-  public void run() {
-    while (isRunning) {
-      this.update(1f);
-      this.repaint();
-      try {
-        Thread.sleep(16);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-    }
-  }
-
-  @Override
-  public void paintComponent(Graphics g) {
-    super.paintComponent(g);
-    this.casualPlaySceneBackground.draw(g);
-    this.world.render(g);
+    this.getThread().start();
   }
 
   @Override
   public void onDispose() {
-    this.isRunning = false;
-    this.gameThread.interrupt();
+    this.setRunning(false);
+    this.getThread().interrupt();
     this.setFocusable(true);
   }
 
   @Override
   public void update(float deltaTime) {
-    this.world.update(1f);
+    super.update(deltaTime);
+    this.world.update(deltaTime);
+    this.healthbar.setPercent(this.ship.getStatus().getCurrentStats().getHealth());
+  }
+
+  @Override
+  public void render(Graphics g) {
+    super.render(g);
+    this.casualPlaySceneBackground.draw(g);
+    this.world.render(g);
+    for (int i = 0; i < this.getSGraphics().size(); i++) {
+      this.getSGraphics().get(i).render(g);
+    }
   }
 }

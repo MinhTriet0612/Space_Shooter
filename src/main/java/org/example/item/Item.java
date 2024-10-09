@@ -14,5 +14,8 @@ public abstract class Item<T extends ItemStats> extends BaseObject {
   private World world;
   private Status<T> status;
 
+  public Item() {
+  }
+
   public abstract void update(float deltaTime);
 }
