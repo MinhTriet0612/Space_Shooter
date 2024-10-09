@@ -22,8 +22,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Bullet extends Entity<BulletStats> {
-  private Status<BulletStats> status = new Status<>(new BulletStats());
   private int direct;
+  private Status<BulletStats> status = new Status<>(new BulletStats());
   private final BufferedImage[][] bullets = AssetManager.getLazerBoltAssets();
   private final Timer bulletAnimationTimer = new Timer(150, e -> this.direct = this.direct != 0 ? 0 : 1);
 
