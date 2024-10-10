@@ -11,7 +11,6 @@ import lombok.Setter;
 public class CasualWorld extends World {
   public CasualWorld() {
     super();
-
     this.addSystem(new MonsterSpawner());
     this.addSystem(new CollisionSystem());
   }

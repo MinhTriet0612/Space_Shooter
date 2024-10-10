@@ -3,14 +3,15 @@ package org.example.entity;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import org.example.constant.ScreenAttributeConstant;
 import org.example.rigid.Circle;
 import org.example.rigid.Rigid;
 import org.example.stats.EntityStats;
 import org.example.system.status.Status;
-import org.example.util.GraphicsUtil;
+import org.example.util.GraphicsUtils;
 import org.example.util.Response;
 import org.example.util.Vector2D;
-import org.example.util.GraphicsUtil.DrawMode;
+import org.example.util.GraphicsUtils.DrawMode;
 import org.example.world.World;
 
 import lombok.Getter;
@@ -42,19 +43,24 @@ public abstract class Entity<S extends EntityStats> extends BaseObject {
       int x = (int) circle.getPosition().getX();
       int y = (int) circle.getPosition().getY();
       int radius = circle.getRadius();
-      GraphicsUtil.drawEllipse(g, x, y, radius * 2, radius * 2, Color.WHITE, DrawMode.CENTER);
+      GraphicsUtils.drawEllipse(g, x, y, radius * 2, radius * 2, Color.WHITE, DrawMode.CENTER);
     }
   }
 
   public void update(float deltaTime) {
-    this.position.add(this.velocity);
-    this.velocity.scale(this.getStatus().getCurrentStats().getFriction());
+    // this.position.add(this.velocity);
+    int tmp = 800;
+    if (this.position.getY() >= tmp
+        || this.position.getY() <= -tmp || this.getPosition().getX() <= 0 || this.position.getX() >= tmp)
+      this.getWorld().getEntities().remove(this);
+    // this.velocity.scale(this.getStatus().getCurrentStats().getFriction());
   }
 
   public void onAdd() {
   }
 
   public void onRemove() {
+    this.world.getEntities().remove(this);
   }
 
   public void onCollisionStay(Entity<?> entity2, Response response) {

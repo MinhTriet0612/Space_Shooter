@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Polygon;
 
-public class GraphicsUtil {
+public class GraphicsUtils {
 
   public enum DrawMode {
     CENTER, NORMAL

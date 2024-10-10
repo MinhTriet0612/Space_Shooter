@@ -10,9 +10,10 @@ import org.example.stats.ShipStats;
 import org.example.system.status.Status;
 import org.example.util.AssetManager;
 import org.example.util.DeepCopyUtils;
-import org.example.util.GraphicsUtil;
+import org.example.util.GraphicsUtils;
 import org.example.util.Response;
-import org.example.util.GraphicsUtil.DrawMode;
+import org.example.util.Vector2D;
+import org.example.util.GraphicsUtils.DrawMode;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,15 +21,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Ship<S extends ShipStats> extends MortalEntity<S> {
-
   private Status<S> status = new Status<S>((S) new ShipStats());
   private int direction;
-  private int isBoosting;
   private final BufferedImage[][] sprites = AssetManager.getShipAssets();
-  private final Timer boostTimer = new Timer(130, e -> {
-    this.updateShipBoost();
-  });
-
+  
   public Ship() {
     super();
   }
@@ -40,18 +36,19 @@ public class Ship<S extends ShipStats> extends MortalEntity<S> {
   @Override
   public void render(Graphics g) {
     super.render(g);
-    GraphicsUtil.drawImage(g, this.sprites[this.isBoosting][this.direction].getScaledInstance(
+    GraphicsUtils.drawImage(g, this.sprites[this.isBoosting][this.direction].getScaledInstance(
         40, 70, Image.SCALE_DEFAULT), (int) this.getPosition().getX(), (int) this.getPosition().getY(), 40, 70,
         DrawMode.CENTER);
   }
 
   @Override
   public void useWeapon() {
-    this.getWeapon().fire(this.getPosition());
+    this.getWeapon().fire(DeepCopyUtils.copy(this.getPosition()), new Vector2D(0, -5));
   }
 
   @Override
   public void update(float deltaTime) {
+    super.update(1f);
   }
 
   @Override
@@ -61,28 +58,19 @@ public class Ship<S extends ShipStats> extends MortalEntity<S> {
 
   @Override
   public void onCollisionStay(Entity<?> other, Response response) {
-    // throw new UnsupportedOperationException("Unimplemented method
-    // 'onCollisionStay'");
   }
 
   @Override
   public void onCollisionExit(Entity<?> other, Response response) {
-    // throw new UnsupportedOperationException("Unimplemented method
-    // 'onCollisionExit'");
   }
 
   @Override
   public void onCollisionEnter(Entity<?> other, Response response) {
     if (other instanceof Bullet) {
+      // bullet.setBullets(AssetManager.getLazerBoltAssets());
       other.setMarkAsRemoved(true);
-      this.getStatus().getCurrentStats().setHealth(this.getStatus().getCurrentStats().getHealth() - 5);
+      this.injure(5);
     }
-    // throw new UnsupportedOperationException("Unimplemented method
-    // 'onCollisionEnter'");
-  }
-
-  public void startTimer() {
-    this.boostTimer.start();
   }
 
   public void moveUp() {
@@ -120,7 +108,4 @@ public class Ship<S extends ShipStats> extends MortalEntity<S> {
     this.direction = 2; // Reset direction to neutral (center) when no left/right is pressed
   }
 
-  public void updateShipBoost() {
-    this.isBoosting = (this.isBoosting == 0) ? 1 : 0;
-  }
 }

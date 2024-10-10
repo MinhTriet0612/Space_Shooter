@@ -24,6 +24,13 @@ public class Vector2D extends BaseObject {
     return Math.sqrt(x * x + y * y);
   }
 
+  public static Vector2D directionTo(Vector2D source, Vector2D target) {
+    float dx = target.x - source.getX();
+    float dy = target.y - source.getY();
+    float length = (float) Math.sqrt(dx * dx + dy * dy);
+    return new Vector2D(dx / length, dy / length);
+}
+
   public Vector2D normalize() {
     double mag = magnitude();
     return new Vector2D((int) (x / mag), (int) (y / mag));
@@ -43,6 +50,11 @@ public class Vector2D extends BaseObject {
 
   public Vector2D add(Vector2D other) {
     return new Vector2D(this.x + other.x, this.y + other.y);
+  }
+
+  public void plus(Vector2D other) {
+    this.x += other.getX();
+    this.y += other.getY();
   }
 
   public Vector2D rotate(double angle) {

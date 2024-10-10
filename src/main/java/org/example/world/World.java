@@ -4,8 +4,9 @@ import java.awt.Graphics;
 import java.util.LinkedList;
 
 import org.example.entity.Entity;
+import org.example.entity.MortalEntity;
 import org.example.item.Item;
-import org.example.scene.Scene;
+import org.example.scene.CasualPlayScene;
 import org.example.system.GameSystem;
 
 import lombok.Getter;
@@ -14,7 +15,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public abstract class World {
-  private Scene scene;
+  private CasualPlayScene scene;
   private LinkedList<GameSystem> systems = new LinkedList<>();
   private LinkedList<Entity<?>> entities = new LinkedList<>();
 
@@ -47,6 +48,10 @@ public abstract class World {
   public <E extends Entity<?>> E addEntity(E entity) {
     this.entities.add(entity);
     entity.setWorld(this);
+    if(entity instanceof MortalEntity mortalEntity) {
+      mortalEntity.getWeapon().setWorld(this);
+      mortalEntity.startTimer();
+    }
     entity.onAdd();
     return entity;
   }

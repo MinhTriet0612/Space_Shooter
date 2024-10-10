@@ -13,7 +13,7 @@ public class MonsterSpawner extends ControllerSystem {
     if (instanceOfMonster != 0)
       return;
     for (int i = 0; i < ScreenAttributeConstant.CASUALPLAYSCENE_WIDTH; i += ScreenAttributeConstant.CASUALPLAYSCENE_WIDTH
-        / 6) {
+        / 3) {
       int y = (int) Math.round(Math.random() * i);
       Monster monster = new Monster();
       monster.setWeapon(new LazerGun());
