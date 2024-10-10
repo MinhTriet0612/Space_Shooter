@@ -3,24 +3,21 @@ package org.example.entity;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import org.example.BaseGameObject;
 import org.example.rigid.Circle;
 import org.example.rigid.Rigid;
 import org.example.stats.EntityStats;
-import org.example.system.status.Status;
 import org.example.util.GraphicsUtil;
 import org.example.util.Response;
 import org.example.util.Vector2D;
 import org.example.util.GraphicsUtil.DrawMode;
-import org.example.world.World;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class Entity<S extends EntityStats> extends BaseObject {
-  private World world;
-  private Status<S> status;
+public abstract class Entity<S extends EntityStats> extends BaseGameObject<S> {
   private Vector2D position = new Vector2D(0, 0);
   private Vector2D velocity = new Vector2D(0, 0);
   private boolean markAsRemoved = false;
@@ -33,9 +30,18 @@ public abstract class Entity<S extends EntityStats> extends BaseObject {
 
   public abstract Rigid getRigid();
 
-  public void render(Graphics g) {
+  @Override
+  public boolean isReady() {
+    return super.isReady() && this.getRigid() != null;
   }
 
+  @Override
+  public void update(float deltaTime) {
+    this.position.add(this.velocity);
+    this.velocity.scale(this.getStatus().getCurrentStats().getFriction());
+  }
+
+  @Override
   public void afterRender(Graphics g) {
     if (this.debugRigid) {
       Circle circle = (Circle) this.getRigid();
@@ -44,11 +50,6 @@ public abstract class Entity<S extends EntityStats> extends BaseObject {
       int radius = circle.getRadius();
       GraphicsUtil.drawEllipse(g, x, y, radius * 2, radius * 2, Color.WHITE, DrawMode.CENTER);
     }
-  }
-
-  public void update(float deltaTime) {
-    this.position.add(this.velocity);
-    this.velocity.scale(this.getStatus().getCurrentStats().getFriction());
   }
 
   public void onAdd() {

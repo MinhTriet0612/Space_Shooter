@@ -1,4 +1,4 @@
-package org.example.entity;
+package org.example;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -14,6 +14,6 @@ public abstract class BaseObject implements Serializable {
   private Instant createdDate = Instant.now(), updatedDate = Instant.now();
   private static final long serialVersionUID = -863164858986274318L;
 
-  protected BaseObject() {
+  public BaseObject() {
   }
 }

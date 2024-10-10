@@ -1,6 +1,6 @@
 package org.example.stats;
 
-import org.example.entity.BaseObject;
+import org.example.BaseObject;
 
 import lombok.Getter;
 import lombok.Setter;

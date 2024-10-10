@@ -1,7 +1,6 @@
 package org.example.util;
 
-import org.example.entity.BaseObject;
-
+import org.example.BaseObject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

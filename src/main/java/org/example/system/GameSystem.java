@@ -1,15 +1,12 @@
 package org.example.system;
 
-import org.example.entity.BaseObject;
-import org.example.world.World;
+import org.example.BaseGameObject;
+import org.example.stats.SystemStats;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class GameSystem extends BaseObject {
-  private World world;
-
-  public abstract void update(float deltaTime);
+public abstract class GameSystem<S extends SystemStats> extends BaseGameObject<S> {
 }
