@@ -1,6 +1,7 @@
 package org.example.item;
 
 import org.example.entity.Bullet;
+import org.example.entity.Monster;
 import org.example.stats.LazerGunStats;
 import org.example.system.status.Status;
 import org.example.util.Vector2D;
@@ -40,6 +41,7 @@ public class LazerGun extends Weapon<LazerGunStats> {
     currentStats.setAmmunition(currentStats.getAmmunition() - 1);
     Bullet bullet = new Bullet();
     bullet.setPosition(position.add(new Vector2D(0, -50)));
+    bullet.setDirect(Math.random() > 0.5 ? 0 : 1);
     this.getWorld().addEntity(bullet);
   }
 
