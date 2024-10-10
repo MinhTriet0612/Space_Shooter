@@ -17,11 +17,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CasualPlayScene extends Scene {
+  private final Ship<?> ship;
   private CasualWorld world = new CasualWorld();
+  private final Healthbar healthbar = new Healthbar();
   private final CasualPlaySceneBackground casualPlaySceneBackground;
   private final ControllerInput controllerInput = new ControllerInput();
-  private final Healthbar healthbar = new Healthbar();
-  private final Ship<?> ship;
 
   public CasualPlayScene() {
     this.setPreferredSize(
@@ -31,20 +31,20 @@ public class CasualPlayScene extends Scene {
     this.casualPlaySceneBackground = new CasualPlaySceneBackground();
     this.setFocusable(true);
 
-    // Add ship entity and controller system to world
     LazerGun lazerGun = this.world.addItem(new LazerGun());
     this.ship = new Ship<>();
-    this.ship.setPosition(new Vector2D(384, 514));
+    this.ship.setPosition(new Vector2D(ScreenAttributeConstant.CASUALPLAYSCENE_WIDTH / 2,
+        ScreenAttributeConstant.CASUALPLAYSCENE_HEIGHT / 2));
     this.ship.setIsBoosting(0);
     this.ship.setWeapon(lazerGun);
 
     ShipController shipController = new ShipController(ship, controllerInput);
-    this.world.addSystem(shipController);
+    this.world.setScene(this);
     this.world.addEntity(ship);
+    this.world.addSystem(shipController);
 
     this.getSGraphics().add(this.healthbar);
 
-    // Register controller input to this scene
     this.addKeyListener(controllerInput);
   }
 

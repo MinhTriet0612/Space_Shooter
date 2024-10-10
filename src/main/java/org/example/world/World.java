@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import org.example.entity.Entity;
 import org.example.item.Item;
+import org.example.scene.Scene;
 import org.example.system.GameSystem;
 
 import lombok.Getter;
@@ -13,6 +14,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public abstract class World {
+  private Scene scene;
   private LinkedList<GameSystem<?>> systems = new LinkedList<>();
   private LinkedList<Entity<?>> entities = new LinkedList<>();
 

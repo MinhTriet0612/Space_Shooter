@@ -25,7 +25,7 @@ public class ShipController extends ControllerSystem {
     boolean down = controllerInput.isKeyDown(KeyEvent.VK_S) || controllerInput.isKeyDown(KeyEvent.VK_DOWN);
     boolean left = controllerInput.isKeyDown(KeyEvent.VK_A) || controllerInput.isKeyDown(KeyEvent.VK_LEFT);
     boolean right = controllerInput.isKeyDown(KeyEvent.VK_D) || controllerInput.isKeyDown(KeyEvent.VK_RIGHT);
-    boolean space = controllerInput.isKeyDown(KeyEvent.VK_SPACE);
+    boolean space = controllerInput.isKeyDown(KeyEvent.VK_SPACE) || controllerInput.isKeyDown(KeyEvent.VK_ENTER);
 
     if (up) {
       this.ship.moveUp();
