@@ -1,7 +1,8 @@
 package org.example.world;
 
 import org.example.system.collision.CollisionSystem;
-import org.example.system.controller.MonsterSpawner;
+import org.example.system.mob.MonsterObserver;
+import org.example.system.mob.MonsterSpawner;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,7 @@ public class CasualWorld extends World {
     super();
 
     this.addSystem(new MonsterSpawner());
+    this.addSystem(new MonsterObserver());
     this.addSystem(new CollisionSystem());
   }
 }

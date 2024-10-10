@@ -21,7 +21,6 @@ import lombok.Setter;
 @Setter
 public class Monster extends MortalEntity<MonsterStats> {
   private Status<MonsterStats> status = new Status<>(new MonsterStats());
-
   private int speed;
   private int direction;
   private int isBoosting;

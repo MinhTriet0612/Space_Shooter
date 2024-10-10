@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public abstract class World {
-  private LinkedList<GameSystem> systems = new LinkedList<>();
+  private LinkedList<GameSystem<?>> systems = new LinkedList<>();
   private LinkedList<Entity<?>> entities = new LinkedList<>();
 
   public void update(float deltaTime) {

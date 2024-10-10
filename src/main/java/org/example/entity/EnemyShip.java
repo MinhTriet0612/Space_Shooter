@@ -23,7 +23,6 @@ import lombok.Setter;
 @Setter
 public class EnemyShip extends Ship<EnemyShipStats> {
   private Status<EnemyShipStats> status = new Status<>(new EnemyShipStats());
-
   private BufferedImage[][] sprites;
   private int isBoosting = 0;
   private int direction = 2;

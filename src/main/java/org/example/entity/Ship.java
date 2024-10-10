@@ -9,7 +9,6 @@ import org.example.rigid.Rigid;
 import org.example.stats.ShipStats;
 import org.example.system.status.Status;
 import org.example.util.AssetManager;
-import org.example.util.DeepCopyUtils;
 import org.example.util.GraphicsUtil;
 import org.example.util.Response;
 import org.example.util.GraphicsUtil.DrawMode;
