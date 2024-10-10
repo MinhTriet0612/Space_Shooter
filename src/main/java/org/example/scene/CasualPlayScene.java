@@ -6,6 +6,7 @@ import org.example.constant.ScreenAttributeConstant;
 import org.example.entity.Ship;
 import org.example.graphic.Healthbar;
 import org.example.input.ControllerInput;
+import org.example.item.GatlinGun;
 import org.example.item.LazerGun;
 import org.example.system.controller.ShipController;
 import org.example.util.Vector2D;
@@ -36,7 +37,7 @@ public class CasualPlayScene extends Scene {
     this.ship.setPosition(new Vector2D(ScreenAttributeConstant.CASUALPLAYSCENE_WIDTH / 2,
         ScreenAttributeConstant.CASUALPLAYSCENE_HEIGHT / 2));
     this.ship.setIsBoosting(0);
-    this.ship.setWeapon(lazerGun);
+    this.ship.setWeapon(new GatlinGun());
 
     ShipController shipController = new ShipController(ship, controllerInput);
     this.world.setScene(this);

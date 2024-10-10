@@ -11,7 +11,7 @@ import org.example.rigid.Circle;
 import org.example.rigid.Rigid;
 import org.example.stats.EnemyShipStats;
 import org.example.system.status.Status;
-import org.example.util.GraphicsUtil;
+import org.example.util.GraphicsUtils;
 import org.example.util.Response;
 import org.example.util.Vector2D;
 import org.example.world.World;
@@ -43,9 +43,9 @@ public class EnemyShip extends Ship<EnemyShipStats> {
   @Override
   public void render(Graphics g) {
     super.render(g);
-    GraphicsUtil.drawImage(g, this.sprites[this.isBoosting][this.direction].getScaledInstance(
+    GraphicsUtils.drawImage(g, this.sprites[this.isBoosting][this.direction].getScaledInstance(
         50, 100, Image.SCALE_DEFAULT), (int) this.getPosition().getX(), (int) this.getPosition().getY(), 50, 100,
-        GraphicsUtil.DrawMode.CENTER);
+        GraphicsUtils.DrawMode.CENTER);
   }
 
   @Override

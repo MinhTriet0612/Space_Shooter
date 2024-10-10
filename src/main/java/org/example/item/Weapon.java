@@ -17,5 +17,5 @@ public abstract class Weapon<S extends WeaponStats> extends Item<S> {
 
   public abstract boolean setAuto();
 
-  public abstract void fire(Vector2D position);
+  public abstract void fire(Vector2D position, Vector2D velocity);
 }

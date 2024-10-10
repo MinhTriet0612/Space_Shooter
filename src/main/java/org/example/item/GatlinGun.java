@@ -1,9 +1,9 @@
 package org.example.item;
 
 import org.example.entity.Bullet;
-import org.example.entity.Monster;
 import org.example.stats.LazerGunStats;
 import org.example.system.status.Status;
+import org.example.util.DeepCopyUtils;
 import org.example.util.Vector2D;
 
 import lombok.Getter;
@@ -13,24 +13,20 @@ import javax.swing.Timer;
 
 @Getter
 @Setter
-public class LazerGun extends Weapon<LazerGunStats> {
+public class GatlinGun extends Weapon<LazerGunStats> {
   private Status<LazerGunStats> status = new Status<LazerGunStats>(new LazerGunStats());
 
   private final Timer reloadAmmunition = new Timer(4000, e -> this.reloadAmmunition());
   private final Timer reloadForNextBullet = new Timer(150, e -> this.reloadForNextBullet());
-
-  public LazerGun() {
-  }
 
   @Override
   public void fire(Vector2D position, Vector2D velocity) {
     LazerGunStats initStats = this.status.getInitStats(),
         currentStats = this.status.getCurrentStats();
 
-    if (!isFiring() || isReload())
-      return;
+    if (!isFiring() || isReload()) return;
 
-    if (currentStats.getAmmunition() == 1) {
+    if (currentStats.getAmmunition() <= 6) {
       this.setReload(true);
       this.reloadAmmunition.start();
       currentStats.setAmmunition(initStats.getAmmunition());
@@ -38,16 +34,15 @@ public class LazerGun extends Weapon<LazerGunStats> {
 
     this.setFiring(false);
     this.reloadForNextBullet.start();
-    currentStats.setAmmunition(currentStats.getAmmunition() - 1);
-    Bullet bullet = new Bullet();
-    bullet.setPosition(position);
-    bullet.getPosition().plus(velocity.scale(5));
-
-
-
-     
-    bullet.setVelocity(velocity);
-    this.getWorld().addEntity(bullet);
+    currentStats.setAmmunition(currentStats.getAmmunition() - 6);
+    for(int i = -6; i <= 6; i+= 2) {
+      Bullet bullet = new Bullet();
+      bullet.setPosition(DeepCopyUtils.copy(position));
+      bullet.getPosition().plus(velocity.scale(5));
+      bullet.setVelocity(new Vector2D(velocity.getX() + i, velocity.getY()));
+      bullet.setType(1);
+      this.getWorld().addEntity(bullet);
+    }
   }
 
   public void reloadForNextBullet() {

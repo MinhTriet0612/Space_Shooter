@@ -8,5 +8,5 @@ import lombok.Setter;
 public abstract class WeaponStats extends ItemStats {
   private int power = 10;
   private int mass = 20;
-  private int ammunition = 30;
+  private int ammunition = 50;
 }

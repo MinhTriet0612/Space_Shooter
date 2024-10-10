@@ -48,7 +48,7 @@ public abstract class Entity<S extends EntityStats> extends BaseGameObject<S> {
       int x = (int) circle.getPosition().getX();
       int y = (int) circle.getPosition().getY();
       int radius = circle.getRadius();
-      GraphicsUtil.drawEllipse(g, x, y, radius * 2, radius * 2, Color.WHITE, DrawMode.CENTER);
+      GraphicsUtils.drawEllipse(g, x, y, radius * 2, radius * 2, Color.WHITE, DrawMode.CENTER);
     }
   }
 
@@ -56,6 +56,7 @@ public abstract class Entity<S extends EntityStats> extends BaseGameObject<S> {
   }
 
   public void onRemove() {
+    this.world.getEntities().remove(this);
   }
 
   public void onCollisionStay(Entity<?> entity2, Response response) {
