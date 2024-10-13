@@ -45,20 +45,21 @@ public class Bullet extends Entity<BulletStats> {
   @Override
   public void update(float deltaTime) {
     super.update(1f);
-    this.getPosition().plus(this.getVelocity().scale(2));
-    if (this.getPosition().distance(new Vector2D(ScreenAttributeConstant.APPSCENE_WIDTH / 2,
-        ScreenAttributeConstant.APPSCENE_HEIGHT / 2)) > ScreenAttributeConstant.APPSCENE_HEIGHT) {
-      this.setMarkAsRemoved(true);
-    }
+    // if (this.getPosition().distance(new
+    // Vector2D(ScreenAttributeConstant.APPSCENE_WIDTH / 2,
+    // ScreenAttributeConstant.APPSCENE_HEIGHT / 2)) >
+    // ScreenAttributeConstant.APPSCENE_HEIGHT) {
+    // this.setMarkAsRemoved(true);
+    // }
   }
 
   @Override
-  public void onAdd() {
+  public void onReady() {
     this.bulletAnimationTimer.start();
   }
 
   @Override
-  public void onCollisionStay(Entity<?> other, Response response) { 
+  public void onCollisionStay(Entity<?> other, Response response) {
   }
 
   @Override
@@ -67,5 +68,8 @@ public class Bullet extends Entity<BulletStats> {
 
   @Override
   public void onCollisionEnter(Entity<?> other, Response response) {
+    if (other instanceof Ship) {
+      this.setMarkAsRemoved(true);
+    }
   }
 }

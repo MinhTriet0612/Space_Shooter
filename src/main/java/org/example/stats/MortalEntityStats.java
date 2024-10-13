@@ -7,5 +7,4 @@ import lombok.Setter;
 @Setter
 public abstract class MortalEntityStats extends EntityStats {
   private int health = 100;
-  private int speed = 5;
 }

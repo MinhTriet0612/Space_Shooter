@@ -10,25 +10,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public abstract class MortalEntity<S extends MortalEntityStats> extends Entity<S> {
-  protected int isBoosting;
-  private Weapon<?> weapon;
-  private final Timer boostTimer = new Timer(130, e -> {
-    this.updateShipBoost();
-  });
-  
-  public void updateShipBoost() {
-    this.isBoosting = (this.isBoosting == 0) ? 1 : 0;
-  }
-  
   public void update(float deltaTime) {
     super.update(deltaTime);
-    if (this.isDead()) {
-      this.onRemove();
-    }
-  }
-
-  public void startTimer() {
-    this.boostTimer.start();
   }
 
   public MortalEntity() {
@@ -38,7 +21,8 @@ public abstract class MortalEntity<S extends MortalEntityStats> extends Entity<S
     return this.getStatus().getCurrentStats().getHealth() <= 0;
   }
 
-  public abstract void useWeapon();
+  public void primaryAction() {
+  }
 
   public void injure(int damage) {
     this.getStatus().getCurrentStats()

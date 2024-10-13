@@ -17,6 +17,18 @@ public class ShipController extends ControllerSystem {
   public ShipController(Ship<?> ship, ControllerInput controllerInput) {
     this.ship = ship;
     this.controllerInput = controllerInput;
+
+    this.controllerInput.addListener(KeyEvent.KEY_PRESSED, e -> {
+      if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+        this.ship.getWeapon().setFiring(true);
+      }
+    });
+
+    this.controllerInput.addListener(KeyEvent.KEY_RELEASED, e -> {
+      if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+        this.ship.getWeapon().setFiring(false);
+      }
+    });
   }
 
   @Override
@@ -25,21 +37,24 @@ public class ShipController extends ControllerSystem {
     boolean down = controllerInput.isKeyDown(KeyEvent.VK_S) || controllerInput.isKeyDown(KeyEvent.VK_DOWN);
     boolean left = controllerInput.isKeyDown(KeyEvent.VK_A) || controllerInput.isKeyDown(KeyEvent.VK_LEFT);
     boolean right = controllerInput.isKeyDown(KeyEvent.VK_D) || controllerInput.isKeyDown(KeyEvent.VK_RIGHT);
-    boolean space = controllerInput.isKeyDown(KeyEvent.VK_SPACE) || controllerInput.isKeyDown(KeyEvent.VK_ENTER);
+    // boolean space = controllerInput.isKeyDown(KeyEvent.VK_SPACE) ||
+    // controllerInput.isKeyDown(KeyEvent.VK_ENTER);
 
     if (up) {
       this.ship.moveUp();
-    } else if (down) {
+    }
+    if (down) {
       this.ship.moveDown();
-    } else if (left) {
+    }
+    if (left) {
       this.ship.moveLeft();
-    } else if (right) {
+    }
+    if (right) {
       this.ship.moveRight();
-    } else {
-      this.ship.reRenderDirection();
     }
 
-    if (space)
-      this.ship.useWeapon();
+    if (!up && !down && !left && !right) {
+      this.ship.idle();
+    }
   }
 }

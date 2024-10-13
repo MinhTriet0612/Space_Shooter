@@ -19,14 +19,31 @@ public abstract class BaseGameObject<S extends Stats> extends BaseObject {
   protected BaseGameObject() {
   }
 
+  public final void checkReady() {
+    if (!this.isAlreadyReady() && this.isReady()) {
+      this.onReady();
+      this.setAlreadyReady(true);
+    }
+  }
+
   public boolean isReady() {
     return this.isAlreadyReady() || (this.getWorld() != null && this.getStatus() != null);
   }
 
+  public void onReady() {
+  }
+
+  public void setWorld(World world) {
+    this.world = world;
+    this.checkReady();
+  }
+
+  public void setStatus(Status<S> status) {
+    this.status = status;
+    this.checkReady();
+  }
+
   public void beforeUpdate(float deltaTime) {
-    if (this.isReady()) {
-      this.setAlreadyReady(true);
-    }
   }
 
   public void update(float deltaTime) {
@@ -42,5 +59,13 @@ public abstract class BaseGameObject<S extends Stats> extends BaseObject {
   }
 
   public void afterRender(Graphics g) {
+  }
+
+  public S getCurrentStats() {
+    return this.getStatus().getCurrentStats();
+  }
+
+  public S getInitStats() {
+    return this.getStatus().getInitStats();
   }
 }

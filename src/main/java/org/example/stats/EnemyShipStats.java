@@ -6,4 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EnemyShipStats extends ShipStats {
+  private float friction = 1;
 }

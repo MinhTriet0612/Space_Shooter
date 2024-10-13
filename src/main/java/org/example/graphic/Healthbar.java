@@ -3,8 +3,9 @@ package org.example.graphic;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import org.example.IGraphic;
+import org.example.Renderable;
 import org.example.constant.ScreenAttributeConstant;
+import org.example.entity.MortalEntity;
 import org.example.util.Vector2D;
 
 import lombok.Getter;
@@ -12,10 +13,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Healthbar implements IGraphic {
+public class Healthbar implements Renderable {
+  private MortalEntity<?> mortalEntity;
   private Vector2D position = new Vector2D(
-      ScreenAttributeConstant.CASUALPLAYSCENE_WIDTH / 2,
-      ScreenAttributeConstant.CASUALPLAYSCENE_HEIGHT - 100);
+      ScreenAttributeConstant.APPSCENE_WIDTH / 2,
+      ScreenAttributeConstant.APPSCENE_HEIGHT - 100);
   private int width = 200;
   private int height = 20;
   private int percent = 100;
@@ -23,8 +25,21 @@ public class Healthbar implements IGraphic {
   public Healthbar() {
   }
 
+  public Healthbar(MortalEntity<?> mortalEntity) {
+    this.mortalEntity = mortalEntity;
+    this.setPercent(this.getNewPercent());
+  }
+
+  @Override
+  public void update(float deltaTime) {
+    this.setPercent(this.getNewPercent());
+  }
+
+  @Override
   public void render(Graphics g) {
-    g.translate((int) this.position.getX() - this.width / 2, (int) this.position.getY());
+    int translateX = (int) this.position.getX() - this.width / 2;
+    int translateY = (int) this.position.getY();
+    g.translate(translateX, translateY);
 
     g.setColor(Color.BLACK);
     g.drawRect(-2, -2,
@@ -38,18 +53,7 @@ public class Healthbar implements IGraphic {
     g.fillRect(0, 0,
         this.width * this.percent / 100, this.height);
 
-    // // draw the border
-    // g.setColor(Color.BLACK);
-    // g.drawRect((int) this.position.getX(), (int) this.position.getY(),
-    // this.width, this.height);
-
-    // // draw the blood inside
-    // g.setColor(Color.RED);
-    // g.fillRect((int) this.position.getX(), (int) this.position.getY(),
-    // this.width, this.height);
-  }
-
-  public void update(float deltaTime) {
+    g.translate(-translateX, -translateY);
   }
 
   public void setPercent(int percent) {
@@ -57,5 +61,9 @@ public class Healthbar implements IGraphic {
     if (this.percent < 0) {
       this.percent = 0;
     }
+  }
+
+  public int getNewPercent() {
+    return mortalEntity.getStatus().getCurrentStats().getHealth();
   }
 }

@@ -11,14 +11,4 @@ public class MainMenuScene extends Scene {
   public void onDispose() {
     // throw new UnsupportedOperationException("Not supported yet.");
   }
-
-  @Override
-  public void update(float deltaTime) {
-    // throw new UnsupportedOperationException("Not supported yet.");
-  }
-
-  @Override
-  public void run() {
-    // throw new UnsupportedOperationException("Not supported yet.");
-  }
 }

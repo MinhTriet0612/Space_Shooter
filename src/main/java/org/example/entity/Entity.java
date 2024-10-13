@@ -7,10 +7,10 @@ import org.example.BaseGameObject;
 import org.example.rigid.Circle;
 import org.example.rigid.Rigid;
 import org.example.stats.EntityStats;
-import org.example.util.GraphicsUtil;
+import org.example.util.GraphicsUtils;
 import org.example.util.Response;
 import org.example.util.Vector2D;
-import org.example.util.GraphicsUtil.DrawMode;
+import org.example.util.GraphicsUtils.DrawMode;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public abstract class Entity<S extends EntityStats> extends BaseGameObject<S> {
+  private float rotation = 0;
   private Vector2D position = new Vector2D(0, 0);
   private Vector2D velocity = new Vector2D(0, 0);
   private boolean markAsRemoved = false;
@@ -37,8 +38,10 @@ public abstract class Entity<S extends EntityStats> extends BaseGameObject<S> {
 
   @Override
   public void update(float deltaTime) {
-    this.position.add(this.velocity);
-    this.velocity.scale(this.getStatus().getCurrentStats().getFriction());
+    this.getPosition().add(this.velocity);
+    float friction = this.getStatus().getCurrentStats().getFriction();
+    this.velocity.mult(new Vector2D(friction, friction));
+
   }
 
   @Override
@@ -56,7 +59,6 @@ public abstract class Entity<S extends EntityStats> extends BaseGameObject<S> {
   }
 
   public void onRemove() {
-    this.world.getEntities().remove(this);
   }
 
   public void onCollisionStay(Entity<?> entity2, Response response) {
@@ -68,21 +70,13 @@ public abstract class Entity<S extends EntityStats> extends BaseGameObject<S> {
   public void onCollisionEnter(Entity<?> other, Response response) {
   }
 
-  public S getCurrentStats() {
-    return this.getStatus().getCurrentStats();
-  }
-
-  public S getInitStats() {
-    return this.getStatus().getInitStats();
-  }
-
   public void destroy() {
     this.markAsRemoved = true;
   }
 
-  public void setPosition(int x, int y) {
-    this.position.setX(x);
-    this.position.setY(y);
+  public void setPosition(float x, float y) {
+    this.getPosition().setX(x);
+    this.getPosition().setY(y);
   }
 
   public void applyForce(Vector2D force) {

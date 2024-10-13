@@ -4,12 +4,13 @@ import org.example.entity.Entity;
 import org.example.rigid.Circle;
 import org.example.rigid.Rectangle;
 import org.example.rigid.Rigid;
+import org.example.stats.SystemStats;
 import org.example.system.GameSystem;
 import org.example.util.Response;
 import org.example.util.Vector2D;
 import java.util.HashMap;
 
-public class CollisionSystem extends GameSystem {
+public class CollisionSystem extends GameSystem<SystemStats> {
   private HashMap<String, Response> oldCollisionMap = new HashMap<>();
   private HashMap<String, Response> newCollisionMap = new HashMap<>();
 
@@ -17,7 +18,10 @@ public class CollisionSystem extends GameSystem {
   public void update(float deltaTime) {
     this.newCollisionMap.clear();
     for (int i = 0; i < this.getWorld().getEntities().size(); i++) {
-      for (int j = i + 1; j < this.getWorld().getEntities().size(); j++) {
+      for (int j = 0; j < this.getWorld().getEntities().size(); j++) {
+        if (i == j) {
+          continue;
+        }
         Entity<?> entity1 = this.getWorld().getEntities().get(i);
         Entity<?> entity2 = this.getWorld().getEntities().get(j);
 

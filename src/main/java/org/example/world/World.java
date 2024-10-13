@@ -7,7 +7,6 @@ import org.example.entity.Entity;
 import org.example.entity.MortalEntity;
 import org.example.item.Item;
 import org.example.scene.Scene;
-import org.example.scene.CasualPlayScene;
 import org.example.system.GameSystem;
 
 import lombok.Getter;
@@ -26,20 +25,20 @@ public abstract class World {
     }
 
     for (int i = 0; i < this.entities.size(); i++) {
-      this.entities.get(i).update(deltaTime);
+      Entity<?> entity = this.getEntities().get(i);
+      entity.beforeUpdate(deltaTime);
+      entity.update(deltaTime);
+      entity.afterUpdate(deltaTime);
     }
 
-    for (int i = 0; i < this.entities.size(); i++) {
-      if (this.entities.get(i).isMarkAsRemoved()) {
-        this.entities.remove(i);
-      }
-    }
+    this.entities.removeIf(Entity::isMarkAsRemoved);
   }
 
   public void render(Graphics g) {
     for (int i = 0; i < this.getEntities().size(); i++) {
       Entity<?> entity = this.getEntities().get(i);
       if (entity.isVisible()) {
+        entity.beforeRender(g);
         entity.render(g);
         entity.afterRender(g);
       }
@@ -49,10 +48,6 @@ public abstract class World {
   public <E extends Entity<?>> E addEntity(E entity) {
     this.entities.add(entity);
     entity.setWorld(this);
-    if(entity instanceof MortalEntity mortalEntity) {
-      mortalEntity.getWeapon().setWorld(this);
-      mortalEntity.startTimer();
-    }
     entity.onAdd();
     return entity;
   }

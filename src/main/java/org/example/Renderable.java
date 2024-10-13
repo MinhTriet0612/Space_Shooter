@@ -2,8 +2,8 @@ package org.example;
 
 import java.awt.Graphics;
 
-public interface IGraphic {
-  void render(Graphics g);
-
+public interface Renderable {
   void update(float deltaTime);
+
+  void render(Graphics g);
 }

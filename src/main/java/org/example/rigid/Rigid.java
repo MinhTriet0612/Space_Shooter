@@ -11,6 +11,6 @@ public abstract class Rigid {
   private Vector2D position;
 
   public Rigid(Vector2D position) {
-    this.position = position;
+    this.setPosition(position);
   }
 }

@@ -7,4 +7,5 @@ import lombok.Setter;
 @Setter
 public class ShipStats extends MortalEntityStats {
   private int size = 20;
+  private float speed = 3;
 }
