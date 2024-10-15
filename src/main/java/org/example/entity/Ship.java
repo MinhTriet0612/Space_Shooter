@@ -1,7 +1,9 @@
 package org.example.entity;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import javax.swing.Timer;
@@ -12,9 +14,7 @@ import org.example.rigid.Rigid;
 import org.example.stats.ShipStats;
 import org.example.system.status.Status;
 import org.example.util.AssetManager;
-import org.example.util.GraphicsUtils;
 import org.example.util.Response;
-import org.example.util.GraphicsUtils.DrawMode;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -33,7 +33,7 @@ public class Ship<S extends ShipStats> extends MortalEntity<S> {
   private MovingState movingState = MovingState.NEUTRAL;
 
   static enum MovingState {
-    NEUTRAL(0), LEFT(1), RIGHT(2);
+    NEUTRAL(2), LEFT(0), RIGHT(4);
 
     private final int value;
 
@@ -75,12 +75,15 @@ public class Ship<S extends ShipStats> extends MortalEntity<S> {
   @Override
   public void render(Graphics g) {
     super.render(g);
-    // TODO: sửa lại đống code này
-
-    int index = this.movingState == MovingState.NEUTRAL ? 2 : this.movingState == MovingState.LEFT ? 0 : 4;
-    GraphicsUtils.drawImage(g, this.getSprites()[this.isBoosting][index].getScaledInstance(
-        40, 70, Image.SCALE_DEFAULT), (int) this.getPosition().getX(), (int) this.getPosition().getY(), 40, 70,
-        DrawMode.CENTER);
+    Graphics2D g2d = (Graphics2D) g;
+    Image image = this.sprites[this.isBoosting][this.getMovingState().getValue()].getScaledInstance(40, 70,
+        Image.SCALE_DEFAULT);
+    int centerX = image.getWidth(null) / 2;
+    int centerY = image.getHeight(null) / 2;
+    AffineTransform transform = new AffineTransform();
+    transform.translate(this.getPosition().getX() - centerX, this.getPosition().getY() - centerY);
+    transform.rotate(this.getRotation() + Math.PI / 2, centerX, centerY);
+    g2d.drawImage(image, transform, null);
   }
 
   @Override
@@ -94,17 +97,17 @@ public class Ship<S extends ShipStats> extends MortalEntity<S> {
   }
 
   @Override
-  public void onCollisionStay(Entity<?> other, Response response) {
+  public void onCollisionStay(Entity<?> other, Response<Entity<?>> response) {
   }
 
   @Override
-  public void onCollisionExit(Entity<?> other, Response response) {
+  public void onCollisionExit(Entity<?> other, Response<Entity<?>> response) {
   }
 
   @Override
-  public void onCollisionEnter(Entity<?> other, Response response) {
+  public void onCollisionEnter(Entity<?> other, Response<Entity<?>> response) {
     if (other instanceof Bullet) {
-      this.injure(5);
+      this.injure((int) (Math.random() * 10) + 5);
     }
   }
 
