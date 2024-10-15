@@ -23,7 +23,7 @@ import lombok.Setter;
 public class CasualPlayScene extends Scene {
   private CasualWorld world = new CasualWorld();
   private final Ship<?> ship = new Ship<>();
-  private final Healthbar healthbar = new Healthbar(this.getShip());
+  private final Healthbar healthbar = new Healthbar();
   private final Background bg = new Background();
   private final ControllerInput controllerInput = new ControllerInput();
 
@@ -56,16 +56,17 @@ public class CasualPlayScene extends Scene {
     this.world.addEntity(ship);
     ShipController shipController = new ShipController(ship, controllerInput);
     this.world.addSystem(shipController);
+    this.healthbar.setMortalEntity(ship);
 
     this.world.setScene(this);
-    this.getSGraphics().add(this.bg);
-    this.getSGraphics().add(this.healthbar);
+    this.addGraphic(this.bg);
+    this.addGraphic(this.healthbar);
   }
 
   @Override
   public void onShow() {
     this.setSize(this.getApp().getSize());
-    this.getSGraphics().add(new FPSCounter(this.getApp()));
+    this.addGraphic(new FPSCounter(this.getApp()));
     this.getApp().addKeyListener(controllerInput);
   }
 

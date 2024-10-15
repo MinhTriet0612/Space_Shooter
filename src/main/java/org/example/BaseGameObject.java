@@ -30,6 +30,7 @@ public abstract class BaseGameObject<S extends Stats> extends BaseObject {
     return this.isAlreadyReady() || (this.getWorld() != null && this.getStatus() != null);
   }
 
+  // Called when the object is ready to be used
   public void onReady() {
   }
 

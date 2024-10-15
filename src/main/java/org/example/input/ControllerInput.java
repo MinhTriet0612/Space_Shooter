@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashSet;
 import java.util.function.Consumer;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,13 +12,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ControllerInput implements KeyListener {
-  private boolean[] keys;
+  private HashSet<Integer> keysDown = new HashSet<>();
   private List<Consumer<KeyEvent>> keyTypedListeners = new ArrayList<>();
   private List<Consumer<KeyEvent>> keyPressedListeners = new ArrayList<>();
   private List<Consumer<KeyEvent>> keyReleasedListeners = new ArrayList<>();
 
   public ControllerInput() {
-    this.keys = new boolean[256];
   }
 
   @Override
@@ -29,7 +29,7 @@ public class ControllerInput implements KeyListener {
 
   @Override
   public void keyPressed(KeyEvent e) {
-    this.keys[e.getKeyCode()] = true;
+    keysDown.add(e.getKeyCode());
     for (Consumer<KeyEvent> listener : keyPressedListeners) {
       listener.accept(e);
     }
@@ -37,14 +37,14 @@ public class ControllerInput implements KeyListener {
 
   @Override
   public void keyReleased(KeyEvent e) {
-    this.keys[e.getKeyCode()] = false;
+    keysDown.remove(e.getKeyCode());
     for (Consumer<KeyEvent> listener : keyReleasedListeners) {
       listener.accept(e);
     }
   }
 
   public boolean isKeyDown(int keyCode) {
-    return this.keys[keyCode];
+    return keysDown.contains(keyCode);
   }
 
   public void addListener(int eventType, Consumer<KeyEvent> listener) {

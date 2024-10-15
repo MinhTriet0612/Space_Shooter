@@ -21,24 +21,23 @@ public class Healthbar implements Renderable {
   private int width = 200;
   private int height = 20;
   private int percent = 100;
+  private int offsetX = 0;
+  private int offsetY = 0;
 
   public Healthbar() {
   }
 
-  public Healthbar(MortalEntity<?> mortalEntity) {
-    this.mortalEntity = mortalEntity;
-    this.setPercent(this.getNewPercent());
-  }
-
   @Override
   public void update(float deltaTime) {
-    this.setPercent(this.getNewPercent());
+    if (this.getMortalEntity() != null) {
+      this.setPercent(this.getMortalEntity().getStatus().getCurrentStats().getHealth());
+    }
   }
 
   @Override
   public void render(Graphics g) {
-    int translateX = (int) this.position.getX() - this.width / 2;
-    int translateY = (int) this.position.getY();
+    int translateX = (int) this.position.getX() - this.width / 2 + this.offsetX;
+    int translateY = (int) this.position.getY() - this.height / 2 + this.offsetY;
     g.translate(translateX, translateY);
 
     g.setColor(Color.BLACK);
@@ -63,7 +62,13 @@ public class Healthbar implements Renderable {
     }
   }
 
-  public int getNewPercent() {
-    return mortalEntity.getStatus().getCurrentStats().getHealth();
+  public void followPos(Vector2D position) {
+    this.setPosition(position);
+  }
+
+  public void followPos(Vector2D position, int offsetX, int offsetY) {
+    this.setPosition(position);
+    this.setOffsetX(offsetX);
+    this.setOffsetY(offsetY);
   }
 }

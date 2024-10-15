@@ -51,7 +51,7 @@ public abstract class Weapon<S extends WeaponStats> extends Item<S> implements R
     if (this.isFiring() && !this.isCooldown()) {
       this.fire();
       this.getCurrentStats()
-          .setAmmunition(this.getCurrentStats().getAmmunition() - 6);
+          .setAmmunition(this.getCurrentStats().getAmmunition() - 1);
       this.setCooldown(true);
       this.fireCooldownTimer.start();
     }

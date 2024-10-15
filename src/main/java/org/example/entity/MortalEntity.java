@@ -1,8 +1,5 @@
 package org.example.entity;
 
-import javax.swing.Timer;
-
-import org.example.item.Weapon;
 import org.example.stats.MortalEntityStats;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,15 +7,21 @@ import lombok.Setter;
 @Setter
 @Getter
 public abstract class MortalEntity<S extends MortalEntityStats> extends Entity<S> {
-  public void update(float deltaTime) {
-    super.update(deltaTime);
-  }
+  private boolean isDead = false;
 
   public MortalEntity() {
   }
 
-  public boolean isDead() {
-    return this.getStatus().getCurrentStats().getHealth() <= 0;
+  public void update(float deltaTime) {
+    super.update(deltaTime);
+
+    if (!this.isDead() && this.getStatus().getCurrentStats().getHealth() <= 0) {
+      this.onDeath();
+      this.setDead(true);
+    }
+  }
+
+  public void onDeath() {
   }
 
   public void primaryAction() {

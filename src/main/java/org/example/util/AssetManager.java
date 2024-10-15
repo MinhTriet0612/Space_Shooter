@@ -65,7 +65,7 @@ public class AssetManager {
 
   public static BufferedImage[][] getLazerBoltAssets() {
     if (AssetManager.lazers != null) {
-    return AssetManager.lazers;
+      return AssetManager.lazers;
     }
 
     int width = 16, height = 16;
