@@ -55,19 +55,21 @@ public abstract class Entity<S extends EntityStats> extends BaseGameObject<S> {
     }
   }
 
+  // When the entity is added to the world
   public void onAdd() {
   }
 
+  // Before the entity is removed from the world
   public void onRemove() {
   }
 
-  public void onCollisionStay(Entity<?> entity2, Response response) {
+  public void onCollisionEnter(Entity<?> other, Response<Entity<?>> response) {
   }
 
-  public void onCollisionExit(Entity<?> other, Response response) {
+  public void onCollisionStay(Entity<?> entity2, Response<Entity<?>> response) {
   }
 
-  public void onCollisionEnter(Entity<?> other, Response response) {
+  public void onCollisionExit(Entity<?> other, Response<Entity<?>> response) {
   }
 
   public void destroy() {

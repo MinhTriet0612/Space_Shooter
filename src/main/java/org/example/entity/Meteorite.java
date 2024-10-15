@@ -35,19 +35,19 @@ public class Meteorite extends Entity<MeteoriteStats> {
   }
 
   @Override
-  public void onCollisionStay(Entity<?> other, Response response) {
+  public void onCollisionStay(Entity<?> other, Response<Entity<?>> response) {
     // throw new UnsupportedOperationException("Unimplemented method
     // 'onCollisionStay'");
   }
 
   @Override
-  public void onCollisionExit(Entity<?> other, Response response) {
+  public void onCollisionExit(Entity<?> other, Response<Entity<?>> response) {
     // throw new UnsupportedOperationException("Unimplemented method
     // 'onCollisionExit'");
   }
 
   @Override
-  public void onCollisionEnter(Entity<?> other, Response response) {
+  public void onCollisionEnter(Entity<?> other, Response<Entity<?>> response) {
     // throw new UnsupportedOperationException("Unimplemented method
     // 'onCollisionEnter'");
   }
