@@ -4,9 +4,7 @@ import java.awt.Graphics;
 import java.util.LinkedList;
 
 import org.example.entity.Entity;
-import org.example.entity.MortalEntity;
 import org.example.item.Item;
-import org.example.rigid.Rectangle;
 import org.example.scene.Scene;
 import org.example.system.GameSystem;
 
