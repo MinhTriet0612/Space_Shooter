@@ -7,7 +7,7 @@ import org.example.graphic.Healthbar;
 import org.example.stats.EnemyShipStats;
 import org.example.system.status.Status;
 import org.example.util.AssetManager;
-import org.example.util.RandomSelector;
+import org.example.util.PossibilityFactor;
 import org.example.util.Vector2D;
 
 import lombok.Getter;
@@ -21,13 +21,17 @@ public class EnemyShip extends Ship<EnemyShipStats> {
   private final BufferedImage[][] sprites = AssetManager.getEnemyAssets();
   private final Timer moveTimer = new Timer(1000, e -> this.move());
   private final Healthbar healthbar = new Healthbar();
+  private final PossibilityFactor movementFactor = new PossibilityFactor();
 
-  private enum Movement {
-    Move, Shoot, Stay, MoveShoot, StayShoot
+  static public class Movement {
+    public static final int MOVE = 1 << 0;
+    public static final int STAY = 1 << 1;
+    public static final int SHOOT = 1 << 2;
+    public static final int MOVESHOOT = 1 << 3;
+    public static final int STAYSHOOT = 1 << 4;
   }
 
   private float moveAngle = 0f;
-  private final double[] probabilities = { 0.2, 0.2, 0.2, 0.2 };
 
   public EnemyShip() {
     super();
@@ -37,6 +41,9 @@ public class EnemyShip extends Ship<EnemyShipStats> {
   public void onReady() {
     super.onReady();
     this.moveTimer.start();
+
+    // setup movement factor
+    this.movementFactor.setFactor(this.getInitStats().getMovementFactor());
 
     // setup healthbar (just testing)
     healthbar.setWidth(100);
@@ -58,26 +65,26 @@ public class EnemyShip extends Ship<EnemyShipStats> {
   }
 
   public void move() {
-    Movement[] actions = { Movement.Move, Movement.Stay, Movement.Shoot, Movement.MoveShoot, Movement.StayShoot };
-    Movement action = RandomSelector.random(actions, probabilities);
-
-    switch (action) {
-      case Move:
+    int movement = movementFactor.random();
+    switch (movement) {
+      case Movement.MOVE:
         this.moveAngle = (float) (Math.random() * Math.PI * 2);
-        this.setVelocity(new Vector2D((float) Math.cos(this.moveAngle), (float) Math.sin(this.moveAngle)).scale(2));
+        this.setVelocity(new Vector2D((float) Math.cos(this.moveAngle), (float) Math.sin(this.moveAngle))
+            .scale(this.getCurrentStats().getSpeed()));
         break;
-      case Stay:
+      case Movement.STAY:
         this.setVelocity(new Vector2D(0, 0));
         break;
-      case Shoot:
+      case Movement.SHOOT:
         this.primaryAction();
         break;
-      case MoveShoot:
+      case Movement.MOVESHOOT:
         this.moveAngle = (float) (Math.random() * Math.PI * 2);
-        this.setVelocity(new Vector2D((float) Math.cos(this.moveAngle), (float) Math.sin(this.moveAngle)).scale(2));
+        this.setVelocity(new Vector2D((float) Math.cos(this.moveAngle), (float) Math.sin(this.moveAngle))
+            .scale(this.getCurrentStats().getSpeed()));
         this.primaryAction();
         break;
-      case StayShoot:
+      case Movement.STAYSHOOT:
         this.setVelocity(new Vector2D(0, 0));
         this.primaryAction();
         break;
