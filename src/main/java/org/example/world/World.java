@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import org.example.entity.Entity;
 import org.example.entity.MortalEntity;
 import org.example.item.Item;
+import org.example.rigid.Rectangle;
 import org.example.scene.Scene;
 import org.example.system.GameSystem;
 
@@ -31,7 +32,14 @@ public abstract class World {
       entity.afterUpdate(deltaTime);
     }
 
-    this.entities.removeIf(Entity::isMarkAsRemoved);
+    for (int i = 0; i < this.entities.size(); i++) {
+      Entity<?> entity = this.getEntities().get(i);
+      if (entity.isMarkAsRemoved()) {
+        entity.onRemove();
+        this.entities.remove(i);
+        i--;
+      }
+    }
   }
 
   public void render(Graphics g) {
