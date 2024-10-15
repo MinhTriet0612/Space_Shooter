@@ -1,16 +1,13 @@
 package org.example;
 
-import java.awt.Graphics;
 import java.util.HashMap;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import org.example.constant.ScreenAttributeConstant;
 import org.example.exception.InvalidDataException;
 import org.example.scene.CasualPlayScene;
 import org.example.scene.MainMenuScene;
 import org.example.scene.Scene;
-import org.example.util.RefreshRateChecker;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -30,8 +27,8 @@ public class App extends JFrame implements Runnable {
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     // add scenes
-    CasualPlayScene casualScene = this.addScene(new CasualPlayScene());
-    MainMenuScene mainMenuScene = this.addScene(new MainMenuScene());
+    this.addScene(new CasualPlayScene());
+    this.addScene(new MainMenuScene());
 
     this.switchTo(CasualPlayScene.class);
   }

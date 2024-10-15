@@ -1,7 +1,6 @@
 package org.example.system.mob;
 
 import org.example.entity.EnemyShip;
-import org.example.graphic.Healthbar;
 import org.example.item.Lazergun;
 import org.example.stats.SystemStats;
 import org.example.system.GameSystem;

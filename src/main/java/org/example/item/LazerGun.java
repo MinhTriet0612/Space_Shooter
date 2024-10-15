@@ -8,8 +8,6 @@ import org.example.util.Vector2D;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.swing.Timer;
-
 @Getter
 @Setter
 public class Lazergun extends Weapon<LazergunStats> {
