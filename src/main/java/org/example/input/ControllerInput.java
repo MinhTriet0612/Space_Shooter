@@ -60,7 +60,7 @@ public class ControllerInput implements KeyListener {
         break;
     }
   }
-
+  
   public void removeListener(int eventType, Consumer<KeyEvent> listener) {
     switch (eventType) {
       case KeyEvent.KEY_TYPED:

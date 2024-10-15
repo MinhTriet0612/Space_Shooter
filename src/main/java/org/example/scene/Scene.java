@@ -1,7 +1,10 @@
 package org.example.scene;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -16,7 +19,7 @@ import lombok.Setter;
 @Setter
 public abstract class Scene extends JPanel implements Renderable {
   private App app;
-  private LinkedList<Renderable> sGraphics = new LinkedList<>();
+  private List<Renderable> sGraphics = new LinkedList<>();
 
   public Scene() {
   }
@@ -26,14 +29,21 @@ public abstract class Scene extends JPanel implements Renderable {
   public abstract void onDispose();
 
   public void update(float deltaTime) {
-    for (int i = 0; i < this.sGraphics.size(); i++) {
-      this.sGraphics.get(i).update(deltaTime);
+    Iterator<Renderable> it = this.sGraphics.iterator();
+    
+    while (it.hasNext()) {
+      Renderable graphic = it.next();
+      graphic.update(deltaTime);
     }
+    
   }
 
   public void render(Graphics g) {
-    for (int i = 0; i < this.sGraphics.size(); i++) {
-      this.sGraphics.get(i).render(g);
+    Iterator<Renderable> it = this.sGraphics.iterator();
+    
+    while (it.hasNext()) {
+      Renderable graphic = it.next();
+      graphic.render(g);
     }
   }
 

@@ -9,33 +9,34 @@ import javax.imageio.ImageIO;
 public class AssetManager {
   private static BufferedImage[][] sprites;
   private static BufferedImage[][] lazers;
+//  private static BufferedImage[][] enemies;
   private static BufferedImage[][] enemies;
 
   public static BufferedImage[][] getEnemyAssets() {
     if (AssetManager.enemies != null) {
       return AssetManager.enemies;
     }
-    int width = 16, height = 24;
+    int width = 32, height = 16;
 
-    String filePath1 = "/assets/spritesheets/enemy.png";
-    String filePath2 = "/assets/spritesheets/enemy.png";
+    String filePath1 = "/assets/spritesheets/enemy-medium.png";
+//    String filePath2 = "/assets/spritesheets/enemy.png";
 
-    List<String> paths = List.of(filePath1, filePath2);
-
-    AssetManager.enemies = new BufferedImage[2][5];
-
+//    List<String> paths = List.of(filePath1, filePath2);
+    
+    AssetManager.enemies = new BufferedImage[1][2];
     try {
-      BufferedImage image = ImageIO
-          .read(AssetManager.class.getResource(paths.get((int) Math.round(Math.random() * 1))));
-      for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 5; j++) {
-          enemies[i][j] = image.getSubimage(j * width, i * height, width, height);
+//      BufferedImage image = ImageIO
+//          .read(AssetManager.class.getResource(paths.get((int) Math.round(Math.random() * 1))));
+      BufferedImage image = ImageIO.read(AssetManager.class.getResource(filePath1));
+        for (int i = 0; i < 1; i++) {
+          for (int j = 0; j < 2; j++) {
+            enemies[i][j] = image.getSubimage(j * width, i * height, width, height);
+          }
         }
-      }
     } catch (IOException e) {
       e.printStackTrace();
     }
-
+    
     return enemies;
   }
 

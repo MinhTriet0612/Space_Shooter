@@ -2,6 +2,7 @@ package org.example.scene;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
 import org.example.Renderable;
 import org.example.constant.ScreenAttributeConstant;
 import org.example.entity.Ship;
@@ -18,6 +19,8 @@ import org.example.world.CasualWorld;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.swing.*;
+
 @Getter
 @Setter
 public class CasualPlayScene extends Scene {
@@ -28,20 +31,36 @@ public class CasualPlayScene extends Scene {
   private final ControllerInput controllerInput = new ControllerInput();
 
   static public class Background implements Renderable {
-    private final BufferedImage backgroundImage;
+    private final BufferedImage backgroundImage1;
+    private final BufferedImage backgroundImage2;
+    private int backgroundY1 = 0;
+    private int backgroundY2 = -ScreenAttributeConstant.APPSCENE_HEIGHT;
+
 
     public Background() {
-      this.backgroundImage = AssetManager.getBackground();
+      this.backgroundImage1 = AssetManager.getBackground();
+      this.backgroundImage2 = AssetManager.getBackground();
     }
+    
 
     @Override
     public void update(float deltaTime) {
+      backgroundY1 += 1;
+      backgroundY2 += 1;
+      if (backgroundY1 >= ScreenAttributeConstant.APPSCENE_HEIGHT) {
+        backgroundY1 = -ScreenAttributeConstant.APPSCENE_HEIGHT;
+      }
+      if (backgroundY2 >= ScreenAttributeConstant.APPSCENE_HEIGHT) {
+        backgroundY2 = -ScreenAttributeConstant.APPSCENE_HEIGHT;
+      }
     }
 
     @Override
     public void render(Graphics g) {
-      g.drawImage(this.backgroundImage, 0, 0,
-          ScreenAttributeConstant.APPSCENE_WIDTH, ScreenAttributeConstant.APPSCENE_HEIGHT, null);
+      g.drawImage(this.backgroundImage1, 0, backgroundY1,
+        ScreenAttributeConstant.APPSCENE_WIDTH, ScreenAttributeConstant.APPSCENE_HEIGHT, null);
+      g.drawImage(this.backgroundImage2, 0, backgroundY2, 
+        ScreenAttributeConstant.APPSCENE_WIDTH, ScreenAttributeConstant.APPSCENE_HEIGHT, null);
     }
   }
 
@@ -50,7 +69,7 @@ public class CasualPlayScene extends Scene {
     // Lazergun lazergun = this.world.addItem(new Lazergun());
     Shotgun shotgun = this.world.addItem(new Shotgun());
     this.ship.setPosition(new Vector2D(ScreenAttributeConstant.APPSCENE_WIDTH / 2,
-        ScreenAttributeConstant.APPSCENE_HEIGHT / 2));
+      ScreenAttributeConstant.APPSCENE_HEIGHT / 2));
     this.ship.setIsBoosting(0);
     this.ship.setWeapon(shotgun);
     this.world.addEntity(ship);

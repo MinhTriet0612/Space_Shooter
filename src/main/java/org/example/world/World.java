@@ -1,7 +1,7 @@
 package org.example.world;
 
 import java.awt.Graphics;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 import org.example.entity.Entity;
 import org.example.item.Item;
@@ -15,10 +15,11 @@ import lombok.Setter;
 @Getter
 public abstract class World {
   private Scene scene;
-  private LinkedList<GameSystem<?>> systems = new LinkedList<>();
-  private LinkedList<Entity<?>> entities = new LinkedList<>();
+  private ArrayList<GameSystem<?>> systems = new ArrayList<>();
+  private ArrayList<Entity<?>> entities = new ArrayList<>();
 
   public void update(float deltaTime) {
+    
     for (int i = 0; i < this.systems.size(); i++) {
       this.systems.get(i).update(deltaTime);
     }

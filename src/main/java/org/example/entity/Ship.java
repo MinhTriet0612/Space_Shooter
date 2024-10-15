@@ -27,7 +27,7 @@ public class Ship<S extends ShipStats> extends MortalEntity<S> {
   private Weapon<?> weapon;
   private final BufferedImage[][] sprites = AssetManager.getShipAssets();
   protected int isBoosting;
-  private final Timer boostTimer = new Timer(130, e -> {
+  private final Timer boostTimer = new Timer(100, e -> {
     this.updateShipBoost();
   });
   private MovingState movingState = MovingState.NEUTRAL;
