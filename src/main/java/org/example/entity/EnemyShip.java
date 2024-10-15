@@ -2,6 +2,8 @@ package org.example.entity;
 
 import java.awt.image.BufferedImage;
 import javax.swing.Timer;
+
+import org.example.graphic.Healthbar;
 import org.example.stats.EnemyShipStats;
 import org.example.system.status.Status;
 import org.example.util.AssetManager;
@@ -18,10 +20,14 @@ public class EnemyShip extends Ship<EnemyShipStats> {
   private Status<EnemyShipStats> status = new Status<>(new EnemyShipStats());
   private final BufferedImage[][] sprites = AssetManager.getEnemyAssets();
   private final Timer moveTimer = new Timer(1000, e -> this.move());
+  private final Healthbar healthbar = new Healthbar();
+
+  private enum Movement {
+    Move, Shoot, Stay, MoveShoot, StayShoot
+  }
 
   private float moveAngle = 0f;
-  private final String[] actions = { "move", "stay", "shoot", "move:shoot" };
-  private final double[] probabilities = { 0.30, 0.10, 0.1 };
+  private final double[] probabilities = { 0.2, 0.2, 0.2, 0.2 };
 
   public EnemyShip() {
     super();
@@ -31,6 +37,19 @@ public class EnemyShip extends Ship<EnemyShipStats> {
   public void onReady() {
     super.onReady();
     this.moveTimer.start();
+
+    // setup healthbar (just testing)
+    healthbar.setWidth(100);
+    healthbar.setHeight(10);
+    healthbar.setMortalEntity(this);
+    healthbar.followPos(this.getPosition(), 0, -20);
+    this.getWorld().getScene().addGraphic(healthbar);
+  }
+
+  @Override
+  public void onDeath() {
+    this.setMarkAsRemoved(true);
+    this.getWorld().getScene().removeGraphic(healthbar);
   }
 
   @Override
@@ -39,19 +58,29 @@ public class EnemyShip extends Ship<EnemyShipStats> {
   }
 
   public void move() {
-    String action = RandomSelector.random(actions, probabilities);
-    if (action.equals("move")) {
-      this.moveAngle = (float) (Math.random() * 2 * Math.PI);
-      this.setVelocity(Vector2D.fromAngle(this.moveAngle).scale(3f));
-    } else if (action.equals("stay")) {
-      this.getVelocity().setX(0);
-      this.getVelocity().setY(0);
-    } else if (action.equals("shoot")) {
-      this.primaryAction();
-    } else if (action.equals("move:shoot")) {
-      this.moveAngle = (float) (Math.random() * 2 * Math.PI);
-      this.setVelocity(Vector2D.fromAngle(this.moveAngle).scale(3f));
-      this.primaryAction();
+    Movement[] actions = { Movement.Move, Movement.Stay, Movement.Shoot, Movement.MoveShoot, Movement.StayShoot };
+    Movement action = RandomSelector.random(actions, probabilities);
+
+    switch (action) {
+      case Move:
+        this.moveAngle = (float) (Math.random() * Math.PI * 2);
+        this.setVelocity(new Vector2D((float) Math.cos(this.moveAngle), (float) Math.sin(this.moveAngle)).scale(2));
+        break;
+      case Stay:
+        this.setVelocity(new Vector2D(0, 0));
+        break;
+      case Shoot:
+        this.primaryAction();
+        break;
+      case MoveShoot:
+        this.moveAngle = (float) (Math.random() * Math.PI * 2);
+        this.setVelocity(new Vector2D((float) Math.cos(this.moveAngle), (float) Math.sin(this.moveAngle)).scale(2));
+        this.primaryAction();
+        break;
+      case StayShoot:
+        this.setVelocity(new Vector2D(0, 0));
+        this.primaryAction();
+        break;
     }
   }
 
