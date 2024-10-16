@@ -15,6 +15,7 @@ import org.example.stats.ShipStats;
 import org.example.system.status.Status;
 import org.example.util.AssetManager;
 import org.example.util.Response;
+import org.example.util.TimerManager;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,7 +28,7 @@ public class Ship<S extends ShipStats> extends MortalEntity<S> {
   private Weapon<?> weapon;
   private final BufferedImage[][] sprites = AssetManager.getShipAssets();
   protected int isBoosting;
-  private final Timer boostTimer = new Timer(100, e -> {
+  private final Timer boostTimer = TimerManager.createTimer(100, e -> {
     this.updateShipBoost();
   });
   private MovingState movingState = MovingState.NEUTRAL;
@@ -94,6 +95,11 @@ public class Ship<S extends ShipStats> extends MortalEntity<S> {
   @Override
   public void onReady() {
     this.boostTimer.start();
+  }
+
+  @Override
+  public void onRemove() {
+    this.boostTimer.stop();
   }
 
   @Override

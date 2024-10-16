@@ -2,6 +2,8 @@ package org.example.item;
 
 import org.example.Renderable;
 import org.example.stats.WeaponStats;
+import org.example.util.TimerManager;
+
 import java.awt.Graphics;
 import javax.swing.Timer;
 
@@ -14,8 +16,8 @@ public abstract class Weapon<S extends WeaponStats> extends Item<S> implements R
   private boolean isCooldown = false;
   private boolean isReload = false;
   private boolean isFiring = false;
-  private Timer reloadAmmunition = new Timer(1000, e -> this.reloadAmmunition());
-  private Timer fireCooldownTimer = new Timer(10, e -> this.fireCooldown());
+  private Timer reloadAmmunition = TimerManager.createTimer(1000, e -> this.reloadAmmunition());
+  private Timer fireCooldownTimer = TimerManager.createTimer(10, e -> this.fireCooldown());
 
   public Weapon() {
     this.reloadAmmunition.setRepeats(false);

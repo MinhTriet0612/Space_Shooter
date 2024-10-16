@@ -18,8 +18,24 @@ public abstract class World {
   private ArrayList<GameSystem<?>> systems = new ArrayList<>();
   private ArrayList<Entity<?>> entities = new ArrayList<>();
 
+  public static class Timer {
+    private long lastTime = System.currentTimeMillis();
+    private long currentTime = System.currentTimeMillis();
+    private long deltaTime = 0;
+
+    public void update() {
+      this.currentTime = System.currentTimeMillis();
+      this.deltaTime = this.currentTime - this.lastTime;
+      this.lastTime = this.currentTime;
+    }
+
+    public long getDeltaTime() {
+      return this.deltaTime;
+    }
+  }
+
   public void update(float deltaTime) {
-    
+
     for (int i = 0; i < this.systems.size(); i++) {
       this.systems.get(i).update(deltaTime);
     }

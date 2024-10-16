@@ -13,6 +13,7 @@ import org.example.system.status.Status;
 import org.example.util.AssetManager;
 import org.example.util.Response;
 import org.example.util.SAT;
+import org.example.util.TimerManager;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -25,7 +26,8 @@ public class Bullet extends Entity<BulletStats> {
   private Status<BulletStats> status = new Status<>(new BulletStats());
   private int type = 0;
   private final BufferedImage[][] sprites = AssetManager.getLazerBoltAssets();
-  private final Timer bulletAnimationTimer = new Timer(150, e -> this.spriteFrame = this.spriteFrame != 0 ? 0 : 1);
+  private final Timer bulletAnimationTimer = TimerManager.createTimer(150,
+      e -> this.spriteFrame = this.spriteFrame != 0 ? 0 : 1);
 
   public enum BulletType {
     NORMAL, LASER
@@ -64,6 +66,11 @@ public class Bullet extends Entity<BulletStats> {
   @Override
   public void onReady() {
     this.bulletAnimationTimer.start();
+  }
+
+  @Override
+  public void onRemove() {
+    this.bulletAnimationTimer.stop();
   }
 
   @Override

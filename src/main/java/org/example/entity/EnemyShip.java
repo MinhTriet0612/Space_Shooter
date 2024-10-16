@@ -8,6 +8,7 @@ import org.example.stats.EnemyShipStats;
 import org.example.system.status.Status;
 import org.example.util.AssetManager;
 import org.example.util.PossibilityFactor;
+import org.example.util.TimerManager;
 import org.example.util.Vector2D;
 
 import lombok.Getter;
@@ -19,7 +20,7 @@ public class EnemyShip extends Ship<EnemyShipStats> {
   private float rotation = (float) (Math.PI / 2);
   private Status<EnemyShipStats> status = new Status<>(new EnemyShipStats());
   private final BufferedImage[][] sprites = AssetManager.getEnemyAssets();
-  private final Timer moveTimer = new Timer(1000, e -> this.move());
+  private final Timer moveTimer = TimerManager.createTimer(1000, e -> this.move());
   private final Healthbar healthbar = new Healthbar();
   private final PossibilityFactor movementFactor = new PossibilityFactor();
 
@@ -55,6 +56,7 @@ public class EnemyShip extends Ship<EnemyShipStats> {
 
   @Override
   public void onDeath() {
+    this.moveTimer.stop();
     this.setMarkAsRemoved(true);
     this.getWorld().getScene().removeGraphic(healthbar);
   }
