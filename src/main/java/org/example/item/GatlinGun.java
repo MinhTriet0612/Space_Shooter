@@ -41,7 +41,7 @@ public class GatlinGun extends Weapon<LazerGunStats> {
       bullet.getPosition().plus(velocity.scale(5));
       bullet.setVelocity(new Vector2D(velocity.getX() + i, velocity.getY()));
       bullet.setType(1);
-      this.getWorld().addEntity(bullet);
+      this.getWorld().addToWorld(bullet);
     }
   }
 

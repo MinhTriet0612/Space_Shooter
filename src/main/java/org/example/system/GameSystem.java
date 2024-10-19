@@ -10,6 +10,5 @@ import lombok.Setter;
 @Setter
 public abstract class GameSystem extends BaseObject {
   private World world;
-
   public abstract void update(float deltaTime);
 }

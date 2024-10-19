@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
 
+import org.example.IGraphic;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

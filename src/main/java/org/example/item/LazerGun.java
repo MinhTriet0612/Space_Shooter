@@ -46,7 +46,7 @@ public class LazerGun extends Weapon<LazerGunStats> {
 
      
     bullet.setVelocity(velocity);
-    this.getWorld().addEntity(bullet);
+    this.getWorld().addToWorld(bullet);
   }
 
   public void reloadForNextBullet() {

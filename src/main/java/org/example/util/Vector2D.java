@@ -57,9 +57,11 @@ public class Vector2D extends BaseObject {
     this.y += other.getY();
   }
 
-  public Vector2D rotate(double angle) {
+  public void rotate(double angle) {
     double cos = Math.cos(angle);
     double sin = Math.sin(angle);
-    return new Vector2D((int) (x * cos - y * sin), (int) (x * sin + y * cos));
+    this.x = (int) (x * cos - y * sin) * 10;
+    this.y = (int) (x * sin + y * cos) * 10;
+    // return new Vector2D((int) (x * cos - y * sin), (int) (x * sin + y * cos));
   }
 }

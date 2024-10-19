@@ -94,6 +94,14 @@ public class Ship<S extends ShipStats> extends MortalEntity<S> {
     }
   }
 
+  public void rotateRight() {
+    this.getPosition().rotate(0.01);
+  }
+
+  public void rotateLeft() {
+    this.getPosition().rotate(-0.01);
+  }
+
   public void moveRight() {
     if (this.getPosition().getX() < 800) {
       // System.out.println(this.status.getInitStats());

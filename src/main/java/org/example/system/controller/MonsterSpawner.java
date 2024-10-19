@@ -13,13 +13,13 @@ public class MonsterSpawner extends ControllerSystem {
     if (instanceOfMonster != 0)
       return;
     for (int i = 0; i < ScreenAttributeConstant.CASUALPLAYSCENE_WIDTH; i += ScreenAttributeConstant.CASUALPLAYSCENE_WIDTH
-        / 3) {
+        / 10) {
       int y = (int) Math.round(Math.random() * i);
       Monster monster = new Monster();
       monster.setWeapon(new LazerGun());
       monster.setPosition(i, -1 * y - 10);
       // MonsterObserver monsterObserver = new MonsterObserver(monster);
-      this.getWorld().addEntity(monster);
+      this.getWorld().addToWorld(monster);
       // this.getWorld().addSystem(monsterObserver);
     }
   }

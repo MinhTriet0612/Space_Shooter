@@ -25,6 +25,8 @@ public class ShipController extends ControllerSystem {
     boolean left = controllerInput.isKeyDown(KeyEvent.VK_A) || controllerInput.isKeyDown(KeyEvent.VK_LEFT);
     boolean right = controllerInput.isKeyDown(KeyEvent.VK_D) || controllerInput.isKeyDown(KeyEvent.VK_RIGHT);
     boolean space = controllerInput.isKeyDown(KeyEvent.VK_SPACE) || controllerInput.isKeyDown(KeyEvent.VK_ENTER);
+    boolean leftRotate = controllerInput.isKeyDown(KeyEvent.VK_Q);
+    boolean rightRotate = controllerInput.isKeyDown(KeyEvent.VK_E);
 
     if (up) {
       this.ship.moveUp();
@@ -34,6 +36,10 @@ public class ShipController extends ControllerSystem {
       this.ship.moveLeft();
     } else if (right) {
       this.ship.moveRight();
+    } if(leftRotate) {
+      this.ship.rotateLeft();
+    } if(rightRotate) {
+      this.ship.rotateRight();
     } else {
       this.ship.reRenderDirection();
     }

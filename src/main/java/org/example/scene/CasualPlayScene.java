@@ -8,6 +8,7 @@ import org.example.graphic.Healthbar;
 import org.example.input.ControllerInput;
 import org.example.item.GatlinGun;
 import org.example.item.LazerGun;
+import org.example.stats.ShipStats;
 import org.example.system.controller.ShipController;
 import org.example.util.Vector2D;
 import org.example.world.CasualWorld;
@@ -18,7 +19,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CasualPlayScene extends Scene {
-  private final Ship<?> ship;
+  private final Ship<ShipStats> ship;
   private CasualWorld world = new CasualWorld();
   private final Healthbar healthbar = new Healthbar();
   private final CasualPlaySceneBackground casualPlaySceneBackground;
